@@ -1,42 +1,50 @@
-# See http://help.github.com/ignore-files/ for more about ignoring files.
-
-# Compiled output
+# === Angular build artifacts ===
 /dist
 /tmp
 /out-tsc
 /bazel-out
+/.angular/cache
 
-# Node
+# === Node ===
 /node_modules
 npm-debug.log
 yarn-error.log
 
-# IDEs and editors
+# === Hardhat / Solidity ===
+/artifacts
+/cache
+/coverage
+/typechain
+/typechain-types
+
+# === Environment files ===
+.env
+.env.*
+.env.local
+.env.development
+.env.production
+
+# === VS Code / Editors ===
 .idea/
 .project
 .classpath
 .c9/
 *.launch
 .settings/
-*.sublime-workspace
-
-# Visual Studio Code
-.vscode/*
+/.vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
 .history/*
 
-# Miscellaneous
-/.angular/cache
-.sass-cache/
-/connect.lock
-/coverage
+# === Miscellaneous ===
 /libpeerconnection.log
 testem.log
 /typings
+.sass-cache/
+connect.lock
 
-# System files
+# === System files ===
 .DS_Store
 Thumbs.db

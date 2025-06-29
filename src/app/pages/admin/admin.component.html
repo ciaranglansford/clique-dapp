@@ -1,0 +1,7 @@
+<div>
+    <button [disabled]="processing" (click)="triggerPayout()">
+      {{ processing ? 'Processing...' : 'Trigger Payout' }}
+    </button>
+  
+    <p *ngIf="message">{{ message }}</p>
+</div>

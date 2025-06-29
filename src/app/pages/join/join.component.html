@@ -1,0 +1,10 @@
+<div>
+    <button (click)="connectWallet()">Connect Wallet</button>
+    <p *ngIf="userAddress">Wallet: {{ userAddress }}</p>
+
+    <button [disabled]="!userAddress || joining" (click)="joinPool()">
+        {{ joining ? 'Joining...' : 'Join Pool (0.1 ETH)' }}
+    </button>
+
+    <p *ngIf="message">{{ message }}</p>
+</div>
