@@ -1,0 +1,6 @@
+<button (click)="connectWallet()">
+    {{ userAddress ? 'Connected' : 'Connect Wallet' }}
+</button>
+
+<p *ngIf="userAddress">Wallet: {{ userAddress }}</p>
+<p *ngIf="error" class="error-text">{{ error }}</p>

@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { Web3Service } from '@app/core/web3.service';
 import { CommonModule } from '@angular/common';
+import { WalletConnectComponent } from '@app/shared/component/wallet-connect/wallet-connect.component';
 
 @Component({
   selector: 'app-join',
-  imports: [CommonModule],
+  imports: [CommonModule, WalletConnectComponent],
   standalone: true,
   templateUrl: './join.component.html',
   styleUrls: ['./join.component.scss']

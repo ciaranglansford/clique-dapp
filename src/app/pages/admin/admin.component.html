@@ -1,16 +1,19 @@
 <div>
-    <button [disabled]="processing" (click)="triggerPayout()">
-      {{ processing ? 'Processing...' : 'Trigger Payout' }}
-    </button>
-  
-    <p *ngIf="message">{{ message }}</p>
 
-    
-    <div *ngIf="payoutInfo" class="payout-result">
-      <h3>🎉 Payout Result</h3>
-      <p>Round: <strong>{{ payoutInfo?.round }}</strong></p>
-      <p>Winner: <strong>{{ payoutInfo?.winner }}</strong></p>
-      <p>Amount: <strong>{{ payoutInfo?.amount }} ETH</strong></p>
-    </div>
+  <app-wallet-connect (connected)="userAddress = $event"></app-wallet-connect>
+
+  <button [disabled]="processing" (click)="triggerPayout()">
+    {{ processing ? 'Processing...' : 'Trigger Payout' }}
+  </button>
+
+  <p *ngIf="message">{{ message }}</p>
+
+  
+  <div *ngIf="payoutInfo" class="payout-result">
+    <h3>🎉 Payout Result</h3>
+    <p>Round: <strong>{{ payoutInfo?.round }}</strong></p>
+    <p>Winner: <strong>{{ payoutInfo?.winner }}</strong></p>
+    <p>Amount: <strong>{{ payoutInfo?.amount }} ETH</strong></p>
+  </div>
 </div>
 

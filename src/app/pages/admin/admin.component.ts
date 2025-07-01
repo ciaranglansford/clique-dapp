@@ -1,15 +1,18 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Web3Service } from '@app/core/web3.service';
 import { CommonModule } from '@angular/common';
+import { WalletConnectComponent } from '@app/shared/component/wallet-connect/wallet-connect.component';
+
 
 @Component({
   selector: 'app-admin',
-  imports: [CommonModule],
+  imports: [CommonModule, WalletConnectComponent],
   standalone: true,
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit, OnDestroy{
+  userAddress: string = '';
   message = '';
   processing = false;
   payoutInfo: { round: bigint, winner: string, amount: string } | null = null;
@@ -26,6 +29,14 @@ export class AdminComponent implements OnInit, OnDestroy{
 
   ngOnDestroy() {
     this.web3.removePayoutListeners();
+  }
+
+  async connectWallet() {
+    try {
+      this.userAddress = await this.web3.connectWallet();
+    } catch (error: any) {
+      this.message = error.message;
+    }
   }
 
   async triggerPayout() {
