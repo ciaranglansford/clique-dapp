@@ -21,6 +21,24 @@ export class Web3Service {
     return this.signer.getAddress();
   }
 
+  listenToPayoutExecuted(callback: (data: { round: bigint, winner: string, amount: string }) => void) {
+    if (!this.contract) throw new Error("Contract not initialized. Call connectWallet() first.");
+    
+    console.log("🔊 Listening to PayoutExecuted...");
+    this.contract.on('PayoutExecuted', (round, winner, amount) => {
+      callback({
+        round,
+        winner,
+        amount: ethers.formatEther(amount)
+      });
+    });
+  }
+  
+  removePayoutListeners() {
+    if (!this.contract) return;
+    this.contract.removeAllListeners('PayoutExecuted');
+  }
+
   getContract() {
     return this.contract;
   }
