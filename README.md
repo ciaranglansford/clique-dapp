@@ -18,5 +18,3 @@ const CONTRACT_ADDRESS = '0x...'; // Replace with your deployed address
 ng serve
 
 Visit: http://localhost:4200
-
-test
