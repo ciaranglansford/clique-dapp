@@ -1,12 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Web3Service } from '@app/core/web3.service';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { WalletConnectComponent } from '@app/shared/component/wallet-connect/wallet-connect.component';
 
 
 @Component({
   selector: 'app-admin',
-  imports: [CommonModule, WalletConnectComponent],
+  imports: [CommonModule, RouterModule, WalletConnectComponent],
   standalone: true,
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss']
