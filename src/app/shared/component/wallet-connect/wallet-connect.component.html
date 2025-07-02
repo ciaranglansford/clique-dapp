@@ -1,5 +1,5 @@
-<button (click)="connectWallet()">
-    {{ userAddress ? 'Connected' : 'Connect Wallet' }}
+<button *ngIf="!userAddress" (click)="connectWallet()">
+    Connect Wallet
 </button>
 
 <p *ngIf="userAddress">Wallet: {{ userAddress }}</p>

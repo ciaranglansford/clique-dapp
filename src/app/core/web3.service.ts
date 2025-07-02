@@ -41,6 +41,32 @@ export class Web3Service {
     }
   }
 
+  /**
+   * Checks if there is an existing wallet connection (without prompting the user).
+   * If connected, sets up provider, signer, contract, and state variables.
+   * Returns the address if connected, otherwise null.
+   */
+  async checkExistingConnection(): Promise<string | null> {
+    if (!window.ethereum) {
+      this._isConnected = false;
+      this._userAddress = null;
+      return null;
+    }
+    this.provider = new ethers.BrowserProvider(window.ethereum);
+    const accounts = await this.provider.send('eth_accounts', []);
+    if (accounts && accounts.length > 0) {
+      this.signer = await this.provider.getSigner();
+      this.contract = new ethers.Contract(CONTRACT_ADDRESS, CliquePoolAbi.abi as ethers.InterfaceAbi, this.signer);
+      this._userAddress = accounts[0];
+      this._isConnected = true;
+      return this._userAddress;
+    } else {
+      this._isConnected = false;
+      this._userAddress = null;
+      return null;
+    }
+  }
+
   listenToPayoutExecuted(callback: (data: { round: bigint, winner: string, amount: string }) => void) {
     if (!this.contract) throw new Error("Contract not initialized. Call connectWallet() first.");
     
