@@ -26,15 +26,15 @@ export class JoinComponent {
     }
   }
 
-  async joinPool() {
+  async joinPot() {
     this.message = '';
     this.joining = true;
     try {
       const contract = this.web3.getContract();
       const entryAmount = await contract['entryAmount'](); // already in wei
-      const tx = await contract['joinPool']({ value: entryAmount });
+      const tx = await contract['joinPot']({ value: entryAmount });
       await tx.wait();
-      this.message = '✅ Joined the pool!';
+      this.message = '✅ Joined the pot!';
     } catch (error: any) {
       this.message = `❌ ${error.reason || error.message}`;
     } finally {

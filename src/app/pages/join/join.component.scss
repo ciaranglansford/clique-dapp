@@ -10,7 +10,7 @@
   text-align: center;
 }
 
-.join-pool-btn {
+.join-pot-btn {
   background-color: #28a745;
   color: white;
   border: none;
@@ -23,11 +23,11 @@
   transition: all 0.2s ease;
 }
 
-.join-pool-btn:hover:not(:disabled) {
+.join-pot-btn:hover:not(:disabled) {
   background-color: #218838;
 }
 
-.join-pool-btn:disabled {
+.join-pot-btn:disabled {
   background-color: #6c757d;
   cursor: not-allowed;
 }

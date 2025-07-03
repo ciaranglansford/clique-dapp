@@ -1,10 +1,10 @@
 <div class="join-container">
-  <h2>Join Pool</h2>
+  <h2>Join Pot</h2>
 
   <app-wallet-connect (connected)="userAddress = $event"></app-wallet-connect>
 
-  <button [disabled]="!userAddress || joining" (click)="joinPool()" class="join-pool-btn">
-      {{ joining ? 'Joining...' : 'Join Pool (0.1 ETH)' }}
+  <button [disabled]="!userAddress || joining" (click)="joinPot()" class="join-pot-btn">
+      {{ joining ? 'Joining...' : 'Join Pot (0.1 ETH)' }}
   </button>
 
   <p *ngIf="message" class="message">{{ message }}</p>

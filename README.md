@@ -1,14 +1,14 @@
 # Clique Dapp
 
 A Web3-powered rotating savings (Daret-style) application built with Angular and Solidity smart contracts.  
-This dApp enables users to connect their wallets, join a savings pool, and manage on-chain logic via smart contracts.
+This dApp enables users to connect their wallets, join a savings pot, and manage on-chain logic via smart contracts.
 
 ---
 
 ## 1. Project Overview
 
-Clique Dapp is a decentralized application (dApp) that allows users to participate in a rotating savings pool (Daret).  
-Users can connect their Ethereum wallet, join the pool by depositing ETH, and (for admins) trigger payouts to randomly selected winners.  
+Clique Dapp is a decentralized application (dApp) that allows users to participate in a rotating savings pot (Daret).  
+Users can connect their Ethereum wallet, join the pot by depositing ETH, and (for admins) trigger payouts to randomly selected winners.  
 All interactions are handled via a deployed smart contract, with a modern Angular frontend.
 
 ---
@@ -23,13 +23,13 @@ clique-dapp/
   │   │   │   └── web3.service.ts         # Handles all Web3 and contract logic
   │   │   ├── pages/
   │   │   │   ├── home/                   # Home page (navigation)
-  │   │   │   ├── join/                   # Join pool page
+  │   │   │   ├── join/                   # Join pot page
   │   │   │   └── admin/                  # Admin page (trigger payout)
   │   │   └── shared/
   │   │       └── component/
   │   │           └── wallet-connect/     # Wallet connect button/component
   │   └── assets/
-  │       └── CliquePool.json             # ABI for the deployed smart contract
+  │       └── CliquePot.json             # ABI for the deployed smart contract
   ├── angular.json                        # Angular project config
   ├── package.json                        # Dependencies and scripts
   └── README.md                           # Project documentation
@@ -57,7 +57,7 @@ clique-dapp/
 - Landing page with navigation buttons to Join and Admin pages.
 
 ### **JoinComponent (`src/app/pages/join/`)**
-- Lets users connect their wallet and join the pool by sending ETH.
+- Lets users connect their wallet and join the pot by sending ETH.
 - Shows connection status and join progress.
 
 ### **AdminComponent (`src/app/pages/admin/`)**
@@ -72,7 +72,7 @@ clique-dapp/
 - Node.js (v16+ recommended)
 - npm
 - MetaMask (or another Ethereum wallet extension)
-- Deployed CliquePool smart contract (update the contract address in `web3.service.ts`)
+- Deployed CliquePot smart contract (update the contract address in `web3.service.ts`)
 
 ### **Installation & Setup**
 1. **Install dependencies:**
@@ -106,15 +106,15 @@ clique-dapp/
 - Click the "Connect Wallet" button on any page.
 - If already connected, the button will show "Connected" and display your address.
 
-### **Join Pool**
+### **Join Pot**
 - Go to the "Join" page.
 - Connect your wallet (if not already connected).
-- Click "Join Pool (0.1 ETH)" to participate.
+- Click "Join Pot (0.1 ETH)" to participate.
 
 ### **Admin Actions**
 - Go to the "Admin" page.
 - Connect your wallet (if not already connected).
-- Click "Trigger Payout" to select a winner and distribute the pool.
+- Click "Trigger Payout" to select a winner and distribute the pot.
 - Payout results will be displayed below.
 
 ### **Navigation**
@@ -125,7 +125,7 @@ clique-dapp/
 ## 6. Customization & Extending
 
 - **Smart Contract ABI:**  
-  Update `src/assets/CliquePool.json` if your contract ABI changes.
+  Update `src/assets/CliquePot.json` if your contract ABI changes.
 
 - **Contract Address:**  
   Update the `CONTRACT_ADDRESS` in `web3.service.ts` after deploying a new contract.
