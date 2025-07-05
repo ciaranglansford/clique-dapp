@@ -1,7 +1,5 @@
 <div class="join-container">
-  <h2>Join Pot</h2>
-
-  <app-wallet-connect (connected)="userAddress = $event"></app-wallet-connect>
+  <h2>Join Pot {{ contractAddress }}</h2>
 
   <button [disabled]="!userAddress || joining" (click)="joinPot()" class="join-pot-btn">
       {{ joining ? 'Joining...' : 'Join Pot (0.1 ETH)' }}

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Web3Service } from '@app/core/web3.service';
 import { PotService } from '@app/core/services/pot.service';
 import { CommonModule } from '@angular/common';
@@ -7,16 +7,17 @@ import { WalletConnectComponent } from '@app/shared/component/wallet-connect/wal
 import { JoinPotRequest } from '@app/shared/models/pot.model';
 
 @Component({
-  selector: 'app-join',
+  selector: 'join-pot',
   imports: [CommonModule, RouterModule, WalletConnectComponent],
   standalone: true,
-  templateUrl: './join.component.html',
-  styleUrls: ['./join.component.scss']
+  templateUrl: './join-pot.component.html',
+  styleUrls: ['./join-pot.component.scss']
 })
-export class JoinComponent {
-  userAddress: string = '';
+export class JoinPotComponent {
+  @Input() userAddress: string | null = null;
   joining = false;
   message = '';
+  contractAddress = '';
 
   constructor(
     private web3: Web3Service,
@@ -41,11 +42,9 @@ export class JoinComponent {
       const tx = await contract['joinPot']({ value: entryAmount });
       await tx.wait();
       
-      // Step 2: Call backend API to record the join
-      const contractAddress = contract.target as string;
       const joinRequest: JoinPotRequest = {
-        contractAddress: contractAddress,
-        walletAddress: this.userAddress
+        contractAddress: this.contractAddress,
+        walletAddress: this.userAddress! //use non-null assertion as join button isnt accessable without it
       };
       
       this.potService.joinPot(joinRequest).subscribe({

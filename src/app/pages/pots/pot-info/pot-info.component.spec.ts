@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { JoinComponent } from './join.component';
+import { PotInfoComponent } from './pot-info.component';
 
-describe('JoinComponent', () => {
-  let component: JoinComponent;
-  let fixture: ComponentFixture<JoinComponent>;
+describe('PotInfoComponent', () => {
+  let component: PotInfoComponent;
+  let fixture: ComponentFixture<PotInfoComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [JoinComponent]
+      imports: [PotInfoComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(JoinComponent);
+    fixture = TestBed.createComponent(PotInfoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

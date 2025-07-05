@@ -1,0 +1,5 @@
+  <div>
+      <app-wallet-connect (connected)="userAddress = $event"></app-wallet-connect>
+
+      <join-pot [userAddress]="userAddress"></join-pot>
+  </div>
