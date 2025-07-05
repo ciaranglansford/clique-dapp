@@ -7,13 +7,13 @@ import { WalletConnectComponent } from '@app/shared/component/wallet-connect/wal
 import { JoinPotRequest } from '@app/shared/models/pot.model';
 
 @Component({
-  selector: 'join-pot',
+  selector: 'join-pot-btn',
   imports: [CommonModule, RouterModule, WalletConnectComponent],
   standalone: true,
-  templateUrl: './join-pot.component.html',
-  styleUrls: ['./join-pot.component.scss']
+  templateUrl: './join-pot-btn.component.html',
+  styleUrls: ['./join-pot-btn.component.scss']
 })
-export class JoinPotComponent {
+export class JoinPotBtnComponent {
   @Input() userAddress: string | null = null;
   joining = false;
   message = '';
@@ -23,6 +23,10 @@ export class JoinPotComponent {
     private web3: Web3Service,
     private potService: PotService
   ) {}
+
+  async ngOnInit() {
+    await this.web3.connectWallet();
+  }
 
   async connectWallet() {
     try {

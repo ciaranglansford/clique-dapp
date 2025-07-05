@@ -3,12 +3,12 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Web3Service } from '@app/core/web3.service';
 import { WalletConnectComponent } from '@app/shared/component/wallet-connect/wallet-connect.component';
-import { JoinPotComponent } from '@app/shared/component/join-pot/join-pot.component';
+import { JoinPotBtnComponent } from '@app/shared/component/buttons/join-pot-btn/join-pot-btn.component';
 
 @Component({
   selector: 'app-user-profile',
   standalone: true,
-  imports: [CommonModule, RouterModule, WalletConnectComponent, JoinPotComponent],
+  imports: [CommonModule, RouterModule, WalletConnectComponent, JoinPotBtnComponent],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss'
 })
