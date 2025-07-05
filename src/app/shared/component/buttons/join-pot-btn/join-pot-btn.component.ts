@@ -11,28 +11,33 @@ import { JoinPotRequest } from '@app/shared/models/pot.model';
   imports: [CommonModule, RouterModule, WalletConnectComponent],
   standalone: true,
   templateUrl: './join-pot-btn.component.html',
-  styleUrls: ['./join-pot-btn.component.scss']
+  styleUrls: ['./join-pot-btn.component.scss'],
 })
 export class JoinPotBtnComponent {
   @Input() userAddress: string | null = null;
+  @Input() contractAddress = '';
   joining = false;
+  connecting = false;
   message = '';
-  contractAddress = '';
 
-  constructor(
-    private web3: Web3Service,
-    private potService: PotService
-  ) {}
+  constructor(private web3: Web3Service, private potService: PotService) {}
 
   async ngOnInit() {
-    await this.web3.connectWallet();
+    if (!this.userAddress) {
+      await this.connectWallet();
+    }
   }
 
   async connectWallet() {
+    this.connecting = true;
+    this.message = '';
     try {
       this.userAddress = await this.web3.connectWallet();
+      this.message = 'Wallet connected!';
     } catch (error: any) {
-      this.message = error.message;
+      this.message = error.message || 'Failed to connect wallet.';
+    } finally {
+      this.connecting = false;
     }
   }
 
@@ -40,28 +45,27 @@ export class JoinPotBtnComponent {
     this.message = '';
     this.joining = true;
     try {
-      // Step 1: Join the smart contract
       const contract = this.web3.getContract();
-      const entryAmount = await contract['entryAmount'](); // already in wei
+      const entryAmount = await contract['entryAmount']();
       const tx = await contract['joinPot']({ value: entryAmount });
       await tx.wait();
-      
+
       const joinRequest: JoinPotRequest = {
         contractAddress: this.contractAddress,
-        walletAddress: this.userAddress! //use non-null assertion as join button isnt accessable without it
+        walletAddress: this.userAddress!,
       };
-      
+
       this.potService.joinPot(joinRequest).subscribe({
         next: (response) => {
           this.message = '✅ Joined the pot! Backend updated successfully.';
           console.log('Backend response:', response);
         },
         error: (error) => {
-          this.message = '⚠️ Smart contract transaction successful, but backend update failed.';
+          this.message =
+            '⚠️ Smart contract transaction successful, but backend update failed.';
           console.error('Backend API error:', error);
-        }
+        },
       });
-      
     } catch (error: any) {
       this.message = `❌ ${error.reason || error.message}`;
     } finally {

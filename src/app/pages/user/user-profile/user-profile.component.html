@@ -1,5 +1,5 @@
-  <div>
-      <app-wallet-connect (connected)="userAddress = $event"></app-wallet-connect>
-
-      <join-pot-btn [userAddress]="userAddress"></join-pot-btn>
-  </div>
+<div class="profile-container">
+  <app-wallet-connect (connected)="onWalletConnected($event)"></app-wallet-connect>
+  <join-pot-btn [userAddress]="userAddress"></join-pot-btn>
+  <p *ngIf="message" class="error-message">{{ message }}</p>
+</div>

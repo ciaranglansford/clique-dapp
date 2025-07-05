@@ -12,6 +12,7 @@ import { Web3Service } from '@app/core/web3.service';
 export class WalletConnectComponent implements OnInit {
   userAddress: string = '';
   error: string = '';
+  loading = false;
 
   @Output() connected: EventEmitter<string> = new EventEmitter<string>();
 
@@ -31,11 +32,15 @@ export class WalletConnectComponent implements OnInit {
   }
 
   async connectWallet() {
+    this.loading = true;
+    this.error = '';
     try {
       this.userAddress = await this.web3.connectWallet();
       this.connected.emit(this.userAddress);
     } catch (err: any) {
       this.error = err.message || 'Wallet connection failed';
+    } finally {
+      this.loading = false;
     }
   }
 }

@@ -1,25 +1,94 @@
+:root {
+  --primary: #3b82f6;
+  --primary-dark: #2563eb;
+  --accent: #fbbf24;
+  --success: #22c55e;
+  --danger: #ef4444;
+  --bg: #f7f9fb;
+  --surface: #fff;
+  --border: #e5e7eb;
+  --text: #222;
+  --text-light: #666;
+  --shadow: 0 4px 24px 0 rgba(60, 60, 120, 0.08);
+  --radius: 14px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+}
+
+header {
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.logo {
+  font-size: 2.2rem;
+  vertical-align: middle;
+  margin-right: 0.5rem;
+}
+
+h1 {
+  font-size: 2.3rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+  margin-bottom: 0.5rem;
+  letter-spacing: -1px;
+}
+
 nav {
-  background-color: #f8f9fa;
-  padding: 1rem;
-  border-bottom: 1px solid #dee2e6;
+  background: var(--surface);
+  padding: 1rem 0.5rem;
+  border-bottom: 1px solid var(--border);
   margin-bottom: 2rem;
+  text-align: center;
+  box-shadow: var(--shadow);
+  border-radius: var(--radius) var(--radius) 0 0;
 }
 
 nav a {
-  color: #007bff;
+  color: var(--primary);
   text-decoration: none;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.2rem;
   margin: 0 0.25rem;
-  border-radius: 4px;
-  transition: background-color 0.2s;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 1.08rem;
+  display: inline-block;
+  transition: background 0.18s, color 0.18s;
 }
 
-nav a:hover {
-  background-color: #e9ecef;
-  text-decoration: none;
+nav a:hover,
+nav a:focus {
+  background: var(--primary);
+  color: #fff;
+  outline: none;
 }
 
 nav a.active {
-  background-color: #007bff;
-  color: white;
+  background: var(--accent);
+  color: var(--primary-dark);
+}
+
+main {
+  min-height: 60vh;
+  padding: 2.5rem 1rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+footer {
+  text-align: center;
+  color: var(--text-light);
+  font-size: 1rem;
+  margin: 2rem 0 1rem 0;
+  padding: 1rem 0 0 0;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 0 0 var(--radius) var(--radius);
+  box-shadow: var(--shadow);
 }
