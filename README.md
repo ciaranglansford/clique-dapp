@@ -1,168 +1,195 @@
-# Clique Dapp
+# Clique DApp - Angular Frontend
 
-A Web3-powered rotating savings (Daret-style) application built with Angular and Solidity smart contracts.  
-This dApp enables users to connect their wallets, join a savings pot, and manage on-chain logic via smart contracts.
+A decentralized application (DApp) built with Angular 17 that connects to smart contracts and a Spring Boot backend for pot-based pooling functionality.
 
----
-
-## 1. Project Overview
-
-Clique Dapp is a decentralized application (dApp) that allows users to participate in a rotating savings pot (Daret).  
-Users can connect their Ethereum wallet, join the pot by depositing ETH, and (for admins) trigger payouts to randomly selected winners.  
-All interactions are handled via a deployed smart contract, with a modern Angular frontend.
-
----
-
-## 2. Folder & File Structure
+## 🏗️ Architecture Overview
 
 ```
 clique-dapp/
-  ├── src/
-  │   ├── app/
-  │   │   ├── core/
-  │   │   │   └── web3.service.ts         # Handles all Web3 and contract logic
-  │   │   ├── pages/
-  │   │   │   ├── home/                   # Home page (navigation)
-  │   │   │   ├── join/                   # Join pot page
-  │   │   │   └── admin/                  # Admin page (trigger payout)
-  │   │   └── shared/
-  │   │       └── component/
-  │   │           └── wallet-connect/     # Wallet connect button/component
-  │   └── assets/
-  │       └── CliquePot.json             # ABI for the deployed smart contract
-  ├── angular.json                        # Angular project config
-  ├── package.json                        # Dependencies and scripts
-  └── README.md                           # Project documentation
+├── src/app/
+│   ├── core/                    # Core services and utilities
+│   │   ├── services/
+│   │   │   └── pot.service.ts   # Backend API communication
+│   │   └── web3.service.ts      # Smart contract interactions
+│   ├── pages/                   # Main application pages
+│   │   ├── home/               # Landing page
+│   │   ├── join/               # Join pot functionality
+│   │   └── admin/              # Admin panel for payouts
+│   └── shared/                 # Reusable components & models
+│       ├── component/
+│       │   └── wallet-connect/ # Wallet connection component
+│       └── models/
+│           └── pot.model.ts    # TypeScript interfaces
 ```
 
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js (v18+)
+- Angular CLI (`npm install -g @angular/cli`)
+- MetaMask browser extension
+- Spring Boot backend running on `localhost:8080`
+
+### Installation & Setup
+```bash
+# Install dependencies
+npm install
+
+# Start development server with proxy
+npm run start:proxy
+
+# Start without proxy (for production)
+npm start
+```
+
+## 🔧 Configuration
+
+### Proxy Setup
+- **File**: `proxy.conf.json`
+- **Purpose**: Forwards `/api` requests to Spring Boot backend
+- **Target**: `http://localhost:8080`
+- **Usage**: `npm run start:proxy`
+
+### Smart Contract
+- **Address**: `0x5FbDB2315678afecb367f032d93F642f64180aa3`
+- **ABI**: `src/assets/CliquePot.json`
+- **Network**: Local development (Chain ID: 31337)
+
+## 📱 Application Flow
+
+### 1. Home Page (`/`)
+- Landing page with navigation to Join and Admin
+- Simple welcome interface
+
+### 2. Join Pot (`/join`)
+- **Step 1**: Connect wallet via MetaMask
+- **Step 2**: Execute smart contract `joinPot()` transaction
+- **Step 3**: Call backend API `/api/pots/join` to record participation
+- **Error Handling**: Distinguishes between smart contract and backend failures
+
+### 3. Admin Panel (`/admin`)
+- **Purpose**: Trigger pot payouts
+- **Functionality**: 
+  - Connect wallet (admin only)
+  - Execute `triggerPayout()` smart contract function
+  - Listen for `PayoutExecuted` events
+  - Display payout results
+
+## 🔌 Key Services
+
+### Web3Service (`core/web3.service.ts`)
+- **Purpose**: Smart contract interactions
+- **Key Methods**:
+  - `connectWallet()`: MetaMask connection
+  - `checkExistingConnection()`: Auto-reconnect
+  - `listenToPayoutExecuted()`: Event listening
+- **Contract Methods**: `joinPot()`, `triggerPayout()`, `entryAmount()`
+
+### PotService (`core/services/pot.service.ts`)
+- **Purpose**: Backend API communication
+- **Endpoints**:
+  - `POST /api/pots/create` - Create new pot
+  - `POST /api/pots/join` - Record pot participation
+- **Headers**: Auto-applied via HTTP interceptor
+
+## 🎯 Data Models
+
+### Pot Models (`shared/models/pot.model.ts`)
+```typescript
+interface CreatePotRequest {
+  contractAddress: string;
+}
+
+interface JoinPotRequest {
+  contractAddress: string;
+  walletAddress: string;
+}
+
+interface JoinPotResponse {
+  potId: number;
+  walletAddress: string;
+  joinedAt: Date;
+}
+```
+
+## 🔄 HTTP Configuration
+
+### Global Headers
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+- **Implementation**: HTTP interceptor (currently removed, add back if needed)
+
+### API Endpoints
+- **Base URL**: `/api` (proxied to `localhost:8080`)
+- **Pot Endpoints**: `/api/pots/*`
+
+## 🛠️ Development
+
+### Adding New Features
+1. **New Pages**: Add to `pages/` directory
+2. **New Services**: Add to `core/services/`
+3. **New Components**: Add to `shared/component/`
+4. **New Models**: Add to `shared/models/`
+
+### Smart Contract Integration
+1. Update contract address in `web3.service.ts`
+2. Update ABI in `src/assets/CliquePot.json`
+3. Add new contract methods to `Web3Service`
+
+### Backend Integration
+1. Add new endpoints to `PotService`
+2. Create corresponding models in `pot.model.ts`
+3. Update proxy configuration if needed
+
+## 🐛 Troubleshooting
+
+### Common Issues
+- **406 Not Acceptable**: Missing JSON headers (add HTTP interceptor)
+- **MetaMask Connection**: Ensure MetaMask is installed and unlocked
+- **Network Issues**: Verify correct network (Chain ID: 31337)
+- **Proxy Issues**: Use `npm run start:proxy` for development
+
+### Debug Commands
+```bash
+# Check Angular version
+ng version
+
+# Check for linting issues
+ng lint
+
+# Build for production
+ng build --configuration production
+```
+
+## 📋 Environment Setup
+
+### Required Environment Variables
+- None currently (contract address hardcoded for development)
+
+### Optional Environment Variables
+- `CONTRACT_ADDRESS`: Smart contract address
+- `BACKEND_URL`: Spring Boot backend URL
+
+## 🔒 Security Notes
+
+- **Wallet Connection**: Uses MetaMask for secure wallet interactions
+- **Transaction Signing**: All transactions require user approval
+- **Backend Communication**: Uses proxy to avoid CORS issues
+- **No Sensitive Data**: No API keys or secrets stored in frontend
+
+## 📚 Dependencies
+
+### Core Dependencies
+- **Angular**: 17.0.0 (standalone components)
+- **Ethers.js**: 6.14.4 (Web3 interactions)
+- **RxJS**: 7.8.0 (reactive programming)
+
+### Development Dependencies
+- **Angular CLI**: 17.0.10
+- **TypeScript**: 5.2.2
+
 ---
 
-## 3. Key Components & Services
-
-### **Web3Service (`src/app/core/web3.service.ts`)**
-- Handles all Ethereum wallet and contract interactions using ethers.js.
-- Methods:
-  - `connectWallet()`: Prompts user to connect wallet, sets up provider, signer, and contract.
-  - `checkExistingConnection()`: Checks for an already-connected wallet (no prompt).
-  - `listenToPayoutExecuted(callback)`: Listens for payout events from the contract.
-  - `removePayoutListeners()`: Removes payout event listeners.
-  - `getContract()`, `getProvider()`, `getSigner()`: Accessors for contract, provider, and signer.
-
-### **WalletConnectComponent (`src/app/shared/component/wallet-connect/`)**
-- UI button for connecting wallet.
-- On load, checks if a wallet is already connected and updates the UI.
-- Emits the connected address to parent components.
-
-### **HomeComponent (`src/app/pages/home/`)**
-- Landing page with navigation buttons to Join and Admin pages.
-
-### **JoinComponent (`src/app/pages/join/`)**
-- Lets users connect their wallet and join the pot by sending ETH.
-- Shows connection status and join progress.
-
-### **AdminComponent (`src/app/pages/admin/`)**
-- For admins to connect their wallet and trigger a payout.
-- Displays payout results and listens for payout events.
-
----
-
-## 4. How to Run the Project
-
-### **Prerequisites**
-- Node.js (v16+ recommended)
-- npm
-- MetaMask (or another Ethereum wallet extension)
-- Deployed CliquePot smart contract (update the contract address in `web3.service.ts`)
-
-### **Installation & Setup**
-1. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-
-2. **Update contract address:**
-   - In `src/app/core/web3.service.ts`, set:
-     ```ts
-     const CONTRACT_ADDRESS = '0x...'; // Replace with your deployed contract address
-     ```
-
-3. **Start the development server:**
-   ```bash
-   npm start
-   ```
-   or
-   ```bash
-   ng serve
-   ```
-
-4. **Open the app:**
-   - Visit [http://localhost:4200](http://localhost:4200) in your browser.
-
----
-
-## 5. Usage
-
-### **Connect Wallet**
-- Click the "Connect Wallet" button on any page.
-- If already connected, the button will show "Connected" and display your address.
-
-### **Join Pot**
-- Go to the "Join" page.
-- Connect your wallet (if not already connected).
-- Click "Join Pot (0.1 ETH)" to participate.
-
-### **Admin Actions**
-- Go to the "Admin" page.
-- Connect your wallet (if not already connected).
-- Click "Trigger Payout" to select a winner and distribute the pot.
-- Payout results will be displayed below.
-
-### **Navigation**
-- Use the navigation bar at the top to switch between Home, Join, and Admin pages.
-
----
-
-## 6. Customization & Extending
-
-- **Smart Contract ABI:**  
-  Update `src/assets/CliquePot.json` if your contract ABI changes.
-
-- **Contract Address:**  
-  Update the `CONTRACT_ADDRESS` in `web3.service.ts` after deploying a new contract.
-
-- **Adding New Pages/Features:**  
-  - Add new components under `src/app/pages/` or `src/app/shared/component/`.
-  - Register new routes in `src/app/app.routes.ts`.
-
-- **Styling:**  
-  - Global styles: `src/styles.scss`
-  - Component styles: Each component has its own `.scss` file.
-
-- **Web3 Logic:**  
-  - Extend `Web3Service` for more contract interactions.
-  - Use the service in any component by injecting it in the constructor.
-
----
-
-## Tech Stack
-
-- **Frontend:** Angular 17, Angular Material (optional)
-- **Web3:** ethers.js v6
-- **Smart Contracts:** Solidity (Hardhat for deployment/testing)
-- **Wallet:** MetaMask (or any injected Ethereum provider)
-
----
-
-## Contributing
-
-1. Fork the repo
-2. Create a new branch (`git checkout -b feature/your-feature`)
-3. Commit your changes
-4. Push to your branch
-5. Open a Pull Request
-
----
-
-## License
-
-MIT
+**Last Updated**: [Current Date]
+**Version**: 1.0.0
+**Maintainer**: [Your Name/Team]
