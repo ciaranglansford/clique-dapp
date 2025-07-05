@@ -1,6 +1,16 @@
-<nav>
-  <a routerLink="/">Home</a> |
-  <a routerLink="/user">My Profile</a> |
-  <a routerLink="/admin">Admin</a>
-</nav>
-<router-outlet></router-outlet>
+<header>
+  <h1>
+    Clique Crypto
+  </h1>
+  <nav aria-label="Main navigation">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+    <a routerLink="/user" routerLinkActive="active">My Profile</a>
+    <a routerLink="/admin" routerLinkActive="active">Admin</a>
+  </nav>
+</header>
+<main>
+  <router-outlet></router-outlet>
+</main>
+<footer>
+  <small>&copy; {{ currentYear }} Clique Dapp. All rights reserved.</small>
+</footer>

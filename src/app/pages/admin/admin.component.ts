@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { WalletConnectComponent } from '@app/shared/component/wallet-connect/wallet-connect.component';
 
-
 @Component({
   selector: 'app-admin',
   imports: [CommonModule, RouterModule, WalletConnectComponent],
@@ -12,7 +11,7 @@ import { WalletConnectComponent } from '@app/shared/component/wallet-connect/wal
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss']
 })
-export class AdminComponent implements OnInit, OnDestroy{
+export class AdminComponent implements OnInit, OnDestroy {
   userAddress: string = '';
   message = '';
   processing = false;
@@ -21,23 +20,24 @@ export class AdminComponent implements OnInit, OnDestroy{
   constructor(private web3: Web3Service) {}
 
   async ngOnInit() {
-    await this.web3.connectWallet();
-    this.web3.listenToPayoutExecuted((data) => {
-      console.log("📥 Event received in component:", data);
-      this.payoutInfo = data;
-    });
+    try {
+      const address = await this.web3.checkExistingConnection();
+      if (address) this.userAddress = address;
+      this.web3.listenToPayoutExecuted((data) => {
+        this.payoutInfo = data;
+      });
+    } catch (error: any) {
+      this.message = error.message;
+    }
   }
 
   ngOnDestroy() {
     this.web3.removePayoutListeners();
   }
 
-  async connectWallet() {
-    try {
-      this.userAddress = await this.web3.connectWallet();
-    } catch (error: any) {
-      this.message = error.message;
-    }
+  onWalletConnected(address: string) {
+    this.userAddress = address;
+    this.message = '';
   }
 
   async triggerPayout() {
@@ -52,5 +52,9 @@ export class AdminComponent implements OnInit, OnDestroy{
     } finally {
       this.processing = false;
     }
+  }
+
+  clearPayoutInfo() {
+    this.payoutInfo = null;
   }
 }

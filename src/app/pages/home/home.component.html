@@ -1,9 +1,14 @@
-<div class="home-container">
-  <h1>Welcome to Clique </h1>
-  <p>Join the pot or access admin functions</p>
-  
-  <div class="button-container">
+<main class="home-container">
+  <h1>Welcome to Clique</h1>
+  <p class="tagline">A decentralized pot for everyone. Join, play, and win!</p>
+  <button *ngIf="!walletConnected" (click)="connectWallet()" class="wallet-btn">
+    Connect Wallet
+  </button>
+  <div class="button-container" *ngIf="walletConnected">
     <button routerLink="/join" class="join-btn">Join Pot</button>
     <button routerLink="/admin" class="admin-btn">Admin</button>
   </div>
-</div>
+    <footer>
+    <small>Built by Clique Crypto</small>
+  </footer>
+</main>

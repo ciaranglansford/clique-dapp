@@ -1,9 +1,30 @@
 <div class="join-container">
-  <h2>Join Pot {{ contractAddress }}</h2>
+  <h2 *ngIf="contractAddress; else noAddress">Join Pot {{ contractAddress }}</h2>
+  <ng-template #noAddress>
+    <h2>Join Pot</h2>
+  </ng-template>
 
-  <button [disabled]="!userAddress || joining" (click)="joinPot()" class="join-pot-btn">
-      {{ joining ? 'Joining...' : 'Join Pot (0.1 ETH)' }}
+  <button
+    *ngIf="!userAddress"
+    (click)="connectWallet()"
+    [disabled]="connecting"
+    class="join-pot-btn"
+    [attr.aria-busy]="connecting"
+    aria-label="Connect Wallet"
+  >
+    {{ connecting ? 'Connecting...' : 'Connect Wallet' }}
   </button>
 
-  <p *ngIf="message" class="message">{{ message }}</p>
+  <button
+    *ngIf="userAddress"
+    [disabled]="!userAddress || joining"
+    (click)="joinPot()"
+    class="join-pot-btn"
+    [attr.aria-busy]="joining"
+    aria-label="Join Pot"
+  >
+    {{ joining ? 'Joining...' : 'Join Pot (0.1 ETH)' }}
+  </button>
+
+  <p *ngIf="message" class="message" aria-live="polite">{{ message }}</p>
 </div>

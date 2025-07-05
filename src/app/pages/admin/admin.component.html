@@ -1,19 +1,26 @@
 <div class="admin-container">
   <h2>Admin Panel</h2>
 
-  <app-wallet-connect (connected)="userAddress = $event"></app-wallet-connect>
+  <app-wallet-connect (connected)="onWalletConnected($event)"></app-wallet-connect>
 
-  <button [disabled]="processing" (click)="triggerPayout()" class="trigger-btn">
+  <button
+    [disabled]="processing || !userAddress"
+    (click)="triggerPayout()"
+    class="trigger-btn"
+    [attr.aria-busy]="processing"
+    aria-label="Trigger Payout"
+  >
     {{ processing ? 'Processing...' : 'Trigger Payout' }}
   </button>
 
-  <p *ngIf="message" class="message">{{ message }}</p>
+  <p *ngIf="message" class="message" aria-live="polite">{{ message }}</p>
 
   <div *ngIf="payoutInfo" class="payout-result">
     <h3>🎉 Payout Result</h3>
     <p>Round: <strong>{{ payoutInfo.round }}</strong></p>
     <p>Winner: <strong>{{ payoutInfo.winner }}</strong></p>
     <p>Amount: <strong>{{ payoutInfo.amount }} ETH</strong></p>
+    <button (click)="clearPayoutInfo()" class="clear-btn" aria-label="Clear payout info">Clear</button>
   </div>
 </div>
 

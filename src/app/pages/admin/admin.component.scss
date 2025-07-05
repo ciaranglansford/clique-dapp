@@ -1,30 +1,39 @@
 .admin-container {
   max-width: 600px;
-  margin: 0 auto;
-  padding: 2rem;
+  margin: 2rem auto;
+  padding: 2.5rem 1.5rem;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .admin-container h2 {
   margin-bottom: 2rem;
-  color: #333;
+  color: var(--primary-dark);
   text-align: center;
 }
 
 .trigger-btn {
-  background-color: #dc3545;
+  background-color: var(--danger);
   color: white;
   border: none;
-  padding: 12px 24px;
-  border-radius: 6px;
-  font-size: 16px;
-  font-weight: 500;
+  padding: 13px 28px;
+  border-radius: 8px;
+  font-size: 1.08rem;
+  font-weight: 600;
   cursor: pointer;
   margin-top: 1rem;
-  transition: all 0.2s ease;
+  transition: background 0.18s;
+  box-shadow: 0 2px 8px #ef444422;
 }
 
-.trigger-btn:hover:not(:disabled) {
-  background-color: #c82333;
+.trigger-btn:hover:not(:disabled),
+.trigger-btn:focus:not(:disabled) {
+  background-color: #b91c1c;
+  outline: none;
 }
 
 .trigger-btn:disabled {
@@ -33,20 +42,28 @@
 }
 
 .message {
-  margin-top: 1rem;
+  margin-top: 1.2rem;
   padding: 1rem;
-  border-radius: 4px;
-  background-color: #f8f9fa;
-  border-left: 4px solid #007bff;
+  border-radius: 6px;
+  background-color: #f8fafc;
+  border-left: 4px solid var(--primary);
+  color: var(--text);
+  font-size: 1.05rem;
+  text-align: center;
 }
 
 .payout-result {
   margin-top: 2rem;
   padding: 1.5rem;
-  background-color: #d4edda;
-  border: 1px solid #c3e6cb;
-  border-radius: 6px;
+  background-color: #e0f7e9;
+  border: 1px solid #b5e5c7;
+  border-radius: 8px;
   color: #155724;
+  position: relative;
+  box-shadow: 0 2px 8px #22c55e22;
+  width: 100%;
+  max-width: 420px;
+  text-align: left;
 }
 
 .payout-result h3 {
@@ -57,4 +74,22 @@
 
 .payout-result p {
   margin: 0.5rem 0;
+}
+
+.clear-btn {
+  background: #fff;
+  color: #155724;
+  border: 1px solid #b5e5c7;
+  border-radius: 4px;
+  padding: 0.4rem 1rem;
+  font-size: 0.98rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background 0.18s;
+}
+
+.clear-btn:hover,
+.clear-btn:focus {
+  background: #f8fafc;
+  outline: none;
 }

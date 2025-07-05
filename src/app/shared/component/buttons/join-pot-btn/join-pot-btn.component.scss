@@ -1,30 +1,41 @@
 .join-container {
   max-width: 600px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 2.2rem 1.5rem;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
 }
 
 .join-container h2 {
   margin-bottom: 2rem;
-  color: #333;
+  color: var(--primary-dark);
   text-align: center;
+  font-size: 1.5rem;
 }
 
 .join-pot-btn {
-  background-color: #28a745;
+  background-color: var(--success);
   color: white;
   border: none;
-  padding: 12px 24px;
-  border-radius: 6px;
-  font-size: 16px;
-  font-weight: 500;
+  padding: 13px 28px;
+  border-radius: 8px;
+  font-size: 1.08rem;
+  font-weight: 600;
   cursor: pointer;
   margin-top: 1rem;
-  transition: all 0.2s ease;
+  margin-right: 1rem;
+  transition: background 0.18s;
+  outline: none;
+  box-shadow: 0 2px 8px #22c55e22;
+}
+
+.join-pot-btn:focus {
+  box-shadow: 0 0 0 3px var(--accent);
 }
 
 .join-pot-btn:hover:not(:disabled) {
-  background-color: #218838;
+  background-color: #16a34a;
 }
 
 .join-pot-btn:disabled {
@@ -33,9 +44,11 @@
 }
 
 .message {
-  margin-top: 1rem;
+  margin-top: 1.2rem;
   padding: 1rem;
-  border-radius: 4px;
-  background-color: #f8f9fa;
-  border-left: 4px solid #007bff;
+  border-radius: 6px;
+  background-color: #f8fafc;
+  border-left: 4px solid var(--primary);
+  color: var(--text);
+  font-size: 1.05rem;
 }
