@@ -1,6 +1,20 @@
-<button *ngIf="!userAddress" (click)="connectWallet()">
-    Connect Wallet
-</button>
+<div class="wallet-connect">
+  <button
+    *ngIf="!userAddress"
+    (click)="connectWallet()"
+    [disabled]="loading"
+    [attr.aria-busy]="loading"
+    aria-label="Connect Wallet"
+    class="wallet-btn"
+  >
+    {{ loading ? 'Connecting...' : 'Connect Wallet' }}
+  </button>
 
-<p *ngIf="userAddress">Wallet: {{ userAddress }}</p>
-<p *ngIf="error" class="error-text">{{ error }}</p>
+  <p *ngIf="userAddress" class="wallet-address">
+    Wallet: {{ userAddress }}
+  </p>
+
+  <p *ngIf="error" class="error-text" aria-live="polite">
+    {{ error }}
+  </p>
+</div>

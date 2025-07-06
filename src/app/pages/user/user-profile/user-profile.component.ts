@@ -12,27 +12,26 @@ import { JoinPotBtnComponent } from '@app/shared/component/buttons/join-pot-btn/
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss'
 })
-
-export class UserProfileComponent implements OnInit, OnDestroy{
+export class UserProfileComponent implements OnInit, OnDestroy {
   userAddress: string = '';
   message = '';
 
-  constructor(private web3: Web3Service){}
+  constructor(private web3: Web3Service) {}
 
   async ngOnInit() {
-    await this.web3.connectWallet();
-  }
-
-  ngOnDestroy() {
-      this.web3.removePayoutListeners();
-  }
-
-  async connectWallet() {
     try {
-      this.userAddress = await this.web3.connectWallet();
+      this.userAddress = await this.web3.checkExistingConnection() || '';
     } catch (error: any) {
       this.message = error.message;
     }
   }
 
+  ngOnDestroy() {
+    this.web3.removePayoutListeners();
+  }
+
+  onWalletConnected(address: string) {
+    this.userAddress = address;
+    this.message = '';
+  }
 }

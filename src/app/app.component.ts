@@ -11,4 +11,5 @@ import { RouterOutlet, RouterModule } from '@angular/router';
 })
 export class AppComponent {
   title = 'clique-dapp';
+  currentYear = new Date().getFullYear();
 }
