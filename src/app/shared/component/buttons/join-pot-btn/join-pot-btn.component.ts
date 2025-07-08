@@ -1,10 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { Web3Service } from '@app/core/web3.service';
-import { PotService } from '@app/core/services/pot.service';
+import { UserPotService } from '@app/core/services/user-pot.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { WalletConnectComponent } from '@app/shared/component/wallet-connect/wallet-connect.component';
-import { JoinPotRequest } from '@app/shared/models/pot.model';
+import { JoinPotRequest } from '@app/shared/models/user-pot.model';
 
 @Component({
   selector: 'join-pot-btn',
@@ -20,7 +20,10 @@ export class JoinPotBtnComponent {
   connecting = false;
   message = '';
 
-  constructor(private web3: Web3Service, private potService: PotService) {}
+  constructor(
+    private web3: Web3Service,
+    private userPotService: UserPotService
+  ) {}
 
   async ngOnInit() {
     if (!this.userAddress) {
@@ -54,8 +57,8 @@ export class JoinPotBtnComponent {
         contractAddress: this.contractAddress,
         walletAddress: this.userAddress!,
       };
-
-      this.potService.joinPot(joinRequest).subscribe({
+      
+      this.userPotService.joinPot(joinRequest).subscribe({
         next: (response) => {
           this.message = '✅ Joined the pot! Backend updated successfully.';
           console.log('Backend response:', response);
