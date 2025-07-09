@@ -18,3 +18,11 @@ export interface UserPot {
   potId: number;
   // Extend with real response
 }
+
+export interface GetUserPotRequest{
+  walletAddress: string;
+}
+
+export interface PotContractList{
+  potList: string[];
+}

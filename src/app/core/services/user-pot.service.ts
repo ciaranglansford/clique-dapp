@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
-import { JoinPotRequest, JoinPotResponse, UserPot } from '@app/shared/models/user-pot.model';
+import { GetUserPotRequest, JoinPotRequest, JoinPotResponse, PotContractList } from '@app/shared/models/user-pot.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -19,10 +19,13 @@ export class UserPotService {
   //getPotList
 
    /** Get pots for a user */
-  getUserPots(userId: string): Observable<UserPot[]> {
-    return this.http.get<UserPot[]>(`${this.baseUrl}/user/${userId}`)
-      .pipe(catchError(this.handleError));
-  }
+  getUserPots(walletAddress: string): Observable<PotContractList> {
+  return this.http.get<PotContractList>(`${this.baseUrl}/list`, {
+    params: { walletAddress }
+  }).pipe(
+    catchError(this.handleError)
+  );
+}
 
    /** Error handler */
     private handleError(error: any) {

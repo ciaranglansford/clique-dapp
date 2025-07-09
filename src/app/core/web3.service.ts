@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ethers } from 'ethers';
+import { ethers, getAddress  } from 'ethers';
 import CliquePotAbi from '../../assets/CliquePot.json'; // your ABI
 
 const CONTRACT_ADDRESS = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
@@ -52,12 +52,17 @@ export class Web3Service {
       this._userAddress = null;
       return null;
     }
+
     this.provider = new ethers.BrowserProvider(window.ethereum);
     const accounts = await this.provider.send('eth_accounts', []);
+
     if (accounts && accounts.length > 0) {
+      //To return case sensitive address
+      const checksummed = getAddress(accounts[0]);
+
       this.signer = await this.provider.getSigner();
       this.contract = new ethers.Contract(CONTRACT_ADDRESS, CliquePotAbi.abi as ethers.InterfaceAbi, this.signer);
-      this._userAddress = accounts[0];
+      this._userAddress = checksummed;
       this._isConnected = true;
       return this._userAddress;
     } else {
