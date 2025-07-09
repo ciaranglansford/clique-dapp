@@ -10,5 +10,5 @@ import { JoinPotBtnComponent } from '@app/shared/component/buttons/join-pot-btn/
 })
 export class PotPreviewComponent {
   @Input() userAddress: string = '';
-  @Input() contractAddress: string = '';
+  @Input() contractAddress!: string;
 }

@@ -1,11 +1,24 @@
-<div class="profile-container">
+<!-- <div >
   <app-wallet-connect (connected)="onWalletConnected($event)"></app-wallet-connect>
   <join-pot-btn [userAddress]="userAddress"></join-pot-btn>
-  <p *ngIf="message" class="error-message">{{ message }}</p>
-</div>
-<div>
-    <app-wallet-connect (connected)="userAddress = $event"></app-wallet-connect>
+  
+</div> -->
+<div class="profile-container">
+  <app-wallet-connect (connected)="onWalletConnected($event)"></app-wallet-connect>
+  <p>Need to look at the capitalization of the addresses being passed, stored with upper and lower case but here they are all lower. Might need to use post if url param lowercasing everything</p>
+  <div *ngIf="isLoading" class="loading-message">
+    <p>Loading your pots...</p>
+  </div>
+  
+  <div *ngIf="!isLoading && hasUserPots(); else noPots">
+    <pot-preview
+      *ngFor="let contractAddress of userPotAddresses"
+      [contractAddress]="contractAddress"
+    ></pot-preview>
+  </div>
 
-    //component for displaying the users joined pools
-    <pot-preview></pot-preview>
+  <!-- Fallback Message -->
+  <ng-template #noPots>
+    <p *ngIf="!isLoading && message" class="error-message">{{ message }}</p>
+  </ng-template>
 </div>

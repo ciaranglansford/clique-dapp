@@ -65,8 +65,8 @@ describe('PotService', () => {
     ];
 
     service.getUserPots(userId).subscribe(res => {
-      expect(res.length).toBe(1);
-      expect(res[0].userId).toBe(userId);
+      expect(res.potList.length).toBe(1);
+      expect(res.potList[0]).toBe(userId);
     });
 
     const req = httpMock.expectOne(`/api/pots/user/${userId}`);
