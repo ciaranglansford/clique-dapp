@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { CreatePotRequest, Pot, GetPotListResponse } from '@app/shared/models/pot.model';
+import { PotInfoResponse } from '@app/shared/models/pot.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,12 @@ export class PotService {
   /** Get all pots */
   getAllPots(): Observable<GetPotListResponse> {
     return this.http.get<GetPotListResponse>(`${this.baseUrl}/all`)
+      .pipe(catchError(this.handleError));
+  }
+
+  /** Get info for a specific pot */
+  getPotInfo(contractAddress: string): Observable<PotInfoResponse> {
+    return this.http.get<PotInfoResponse>(`${this.baseUrl}/info/${contractAddress}`)
       .pipe(catchError(this.handleError));
   }
 
