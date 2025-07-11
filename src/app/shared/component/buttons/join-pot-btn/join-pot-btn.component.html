@@ -4,7 +4,7 @@
     <h2>Join Pot</h2>
   </ng-template>
 
-  <button
+  <!-- <button
     *ngIf="!userAddress"
     (click)="connectWallet()"
     [disabled]="connecting"
@@ -13,7 +13,7 @@
     aria-label="Connect Wallet"
   >
     {{ connecting ? 'Connecting...' : 'Connect Wallet' }}
-  </button>
+  </button> -->
 
   <button
     *ngIf="userAddress"

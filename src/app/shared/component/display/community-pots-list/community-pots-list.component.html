@@ -1,0 +1,12 @@
+<div *ngIf="!isLoading && hasPots(); else noPots">
+  <div class="pots-grid">
+    <pot-preview
+      *ngFor="let contractAddress of potContractAddresses"
+      [contractAddress]="contractAddress"
+    ></pot-preview>
+  </div>
+</div>
+
+<ng-template #noPots>
+  <p>No community pots available at the moment.</p>
+</ng-template>

@@ -7,3 +7,7 @@ export interface Pot {
   contractAddress: string;
   // Extend with any backend-returned fields
 }
+
+export interface GetPotListResponse {
+  potList: string[];
+}

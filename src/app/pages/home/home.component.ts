@@ -3,11 +3,12 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Web3Service } from '../../core/web3.service';
+import { CommunityPotsListComponent } from '@app/shared/component/display/community-pots-list/community-pots-list.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, HttpClientModule],
+  imports: [CommonModule, RouterModule, HttpClientModule, CommunityPotsListComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

@@ -36,7 +36,6 @@ export class JoinPotBtnComponent {
     this.message = '';
     try {
       this.userAddress = await this.web3.connectWallet();
-      this.message = 'Wallet connected!';
     } catch (error: any) {
       this.message = error.message || 'Failed to connect wallet.';
     } finally {
@@ -60,7 +59,7 @@ export class JoinPotBtnComponent {
       
       this.userPotService.joinPot(joinRequest).subscribe({
         next: (response) => {
-          this.message = '✅ Joined the pot! Backend updated successfully.';
+          this.message = '✅ Joined the pot!';
           console.log('Backend response:', response);
         },
         error: (error) => {
