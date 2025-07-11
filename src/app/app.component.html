@@ -3,10 +3,17 @@
     Clique Crypto
   </h1>
   <nav aria-label="Main navigation">
-    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
-    <a routerLink="/user" routerLinkActive="active">My Profile</a>
-    <a routerLink="/admin" routerLinkActive="active">Admin</a>
-  </nav>
+  <div class="nav-container">
+    <div class="nav-links">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+      <a routerLink="/user" routerLinkActive="active">My Profile</a>
+      <a routerLink="/admin" routerLinkActive="active">Admin</a>
+    </div>
+    <div class="wallet-container">
+      <app-wallet-connect></app-wallet-connect>
+    </div>
+  </div>
+</nav>
 </header>
 <main>
   <router-outlet></router-outlet>

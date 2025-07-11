@@ -22,8 +22,8 @@ body {
 
 header {
   text-align: center;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .logo {
@@ -42,19 +42,33 @@ h1 {
 
 nav {
   background: var(--surface);
-  padding: 1rem 0.5rem;
+  padding: 0.75rem 1.25rem;
   border-bottom: 1px solid var(--border);
-  margin-bottom: 2rem;
-  text-align: center;
+  margin-bottom: 1.5rem;
   box-shadow: var(--shadow);
   border-radius: var(--radius) var(--radius) 0 0;
 }
 
-nav a {
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.25rem;
+  justify-content: center;
+}
+
+.nav-links a {
   color: var(--primary);
   text-decoration: none;
   padding: 0.5rem 1.2rem;
-  margin: 0 0.25rem;
   border-radius: 6px;
   font-weight: 500;
   font-size: 1.08rem;
@@ -62,21 +76,26 @@ nav a {
   transition: background 0.18s, color 0.18s;
 }
 
-nav a:hover,
-nav a:focus {
+.nav-links a:hover,
+.nav-links a:focus {
   background: var(--primary);
   color: #fff;
   outline: none;
 }
 
-nav a.active {
+.nav-links a.active {
   background: var(--accent);
   color: var(--primary-dark);
 }
 
+.wallet-container {
+  display: flex;
+  align-items: center;
+}
+
 main {
   min-height: 60vh;
-  padding: 2.5rem 1rem;
+  padding: 1.5rem 1rem;
   max-width: 900px;
   margin: 0 auto;
 }
