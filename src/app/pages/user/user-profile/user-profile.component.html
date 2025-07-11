@@ -5,7 +5,9 @@
 </div> -->
 <div class="profile-container">
   <app-wallet-connect (connected)="onWalletConnected($event)"></app-wallet-connect>
-  <p>Need to look at the capitalization of the addresses being passed, stored with upper and lower case but here they are all lower. Might need to use post if url param lowercasing everything</p>
+
+  <create-pot-btn></create-pot-btn>
+
   <div *ngIf="isLoading" class="loading-message">
     <p>Loading your pots...</p>
   </div>

@@ -6,11 +6,14 @@ import { WalletConnectComponent } from '@app/shared/component/wallet-connect/wal
 import { JoinPotBtnComponent } from '@app/shared/component/buttons/join-pot-btn/join-pot-btn.component';
 import { PotPreviewComponent } from '@app/shared/component/display/pot-preview/pot-preview.component'
 import { UserPotService } from '@app/core/services/user-pot.service';
+import { HttpClient } from '@angular/common/http';
+import { ethers } from 'ethers';
+import { CreatePotBtnComponent } from '@app/shared/component/buttons/create-pot-btn/create-pot-btn.component';
 
 @Component({
   selector: 'app-user-profile',
   standalone: true,
-  imports: [CommonModule, RouterModule, WalletConnectComponent, JoinPotBtnComponent, PotPreviewComponent],
+  imports: [CommonModule, RouterModule, WalletConnectComponent, JoinPotBtnComponent, PotPreviewComponent, CreatePotBtnComponent],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss'
 })
@@ -20,7 +23,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   message: string | null = null;
 
-  constructor(private web3: Web3Service, private userPotService: UserPotService) {}
+  constructor(
+    private web3: Web3Service,
+    private userPotService: UserPotService,
+    private http: HttpClient
+  ) {}
 
   async ngOnInit(): Promise<void> {
     try {

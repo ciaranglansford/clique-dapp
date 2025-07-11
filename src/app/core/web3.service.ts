@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ethers, getAddress  } from 'ethers';
 import CliquePotAbi from '../../assets/CliquePot.json'; // your ABI
+import { deployContract } from './services/deploy-contract.util';
 
 const CONTRACT_ADDRESS = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
 
@@ -70,6 +71,24 @@ export class Web3Service {
       this._userAddress = null;
       return null;
     }
+  }
+
+  /**
+   * Deploy a new CliquePot contract.
+   * @param entryAmount The entry amount for the pot (uint256, in wei)
+   * @returns The deployed contract address
+   */
+  async deployCliquePot(entryAmount: bigint): Promise<string> {
+    if (!this.signer) {
+      throw new Error('Wallet not connected');
+    }
+    const abi = (CliquePotAbi as any).abi;
+    const bytecode = (CliquePotAbi as any).bytecode;
+    if (!bytecode) {
+      throw new Error('CliquePot bytecode not found in ABI JSON');
+    }
+    // Use the reusable deployment utility
+    return await deployContract(this.signer, abi, bytecode, entryAmount);
   }
 
   listenToPayoutExecuted(callback: (data: { round: bigint, winner: string, amount: string }) => void) {

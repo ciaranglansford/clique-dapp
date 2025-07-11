@@ -1,0 +1,7 @@
+<div class="create-pot-container">
+  <input type="text" [(ngModel)]="entryAmountEth" placeholder="Entry Amount (ETH)" class="entry-input" [disabled]="isDeploying">
+  <button *ngIf="userAddress" (click)="createPot()" [disabled]="isDeploying || !userAddress" class="create-btn">
+    {{ isDeploying ? 'Creating...' : 'Create Pot' }}
+  </button>
+  <div *ngIf="deployMessage" class="deploy-message">{{ deployMessage }}</div>
+</div> 
