@@ -6,8 +6,6 @@ import { WalletConnectComponent } from '@app/shared/component/wallet-connect/wal
 import { JoinPotBtnComponent } from '@app/shared/component/buttons/join-pot-btn/join-pot-btn.component';
 import { PotPreviewComponent } from '@app/shared/component/display/pot-preview/pot-preview.component'
 import { UserPotService } from '@app/core/services/user-pot.service';
-import { HttpClient } from '@angular/common/http';
-import { ethers } from 'ethers';
 import { CreatePotBtnComponent } from '@app/shared/component/buttons/create-pot-btn/create-pot-btn.component';
 
 @Component({
@@ -26,7 +24,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   constructor(
     private web3: Web3Service,
     private userPotService: UserPotService,
-    private http: HttpClient
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -41,7 +38,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.web3.removePayoutListeners();
+   // this.web3.removePayoutListeners();
   }
 
   onWalletConnected(address: string): void {

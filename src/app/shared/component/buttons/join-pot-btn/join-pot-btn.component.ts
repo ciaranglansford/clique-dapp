@@ -48,7 +48,7 @@ export class JoinPotBtnComponent {
     this.message = '';
     this.joining = true;
     try {
-      const contract = this.web3.getContract();
+      const contract = this.web3.getContractAt(this.contractAddress);
       const entryAmount = await contract['entryAmount']();
       const tx = await contract['joinPot']({ value: entryAmount });
       await tx.wait();

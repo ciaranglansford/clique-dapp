@@ -23,16 +23,16 @@ export class AdminComponent implements OnInit, OnDestroy {
     try {
       const address = await this.web3.checkExistingConnection();
       if (address) this.userAddress = address;
-      this.web3.listenToPayoutExecuted((data) => {
-        this.payoutInfo = data;
-      });
+      // this.web3.listenToPayoutExecuted((data) => {
+      //   this.payoutInfo = data;
+      // });
     } catch (error: any) {
       this.message = error.message;
     }
   }
 
   ngOnDestroy() {
-    this.web3.removePayoutListeners();
+    //this.web3.removePayoutListeners();
   }
 
   onWalletConnected(address: string) {
@@ -44,8 +44,8 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.message = '';
     this.processing = true;
     try {
-      const contract = this.web3.getContract();
-      await contract['triggerPayout']();
+      //const contract = this.web3.getContract();
+      //await contract['triggerPayout']();
       this.message = '✅ Payout triggered!';
     } catch (error: any) {
       this.message = `❌ ${error.reason || error.message}`;
