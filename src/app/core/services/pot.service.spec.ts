@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { PotService } from './pot.service';
-import { CreatePotRequest, Pot } from '@app/shared/models/pot.model';
+import { CreatePotRequest, GetPotListResponse, Pot } from '@app/shared/models/pot.model';
 
 describe('PotService', () => {
   let service: PotService;
@@ -53,14 +53,13 @@ describe('PotService', () => {
 
 
   it('should get all pots', () => {
-    const mockResponse: Pot[] = [
-      { id: 1, contractAddress: '0xabc' },
-      { id: 2, contractAddress: '0xdef' }
+    const mockResponse: GetPotListResponse[] = [
+      { potList:['0xabc', '0xvv'] }
     ];
 
     service.getAllPots().subscribe(res => {
-      expect(res.length).toBe(2);
-      expect(res).toEqual(mockResponse);
+      expect(res.potList.length).toBe(2);
+      expect(res.potList).toEqual(mockResponse[0].potList);
     });
 
     const req = httpMock.expectOne('/api/pots');
