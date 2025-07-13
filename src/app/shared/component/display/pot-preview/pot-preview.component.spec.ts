@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { UserPotService } from '@app/core/services/user-pot.service';
 
 import { PotPreviewComponent } from './pot-preview.component';
 
@@ -8,7 +10,10 @@ describe('PotPreviewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PotPreviewComponent]
+      imports: [PotPreviewComponent, HttpClientTestingModule],
+      providers: [
+        { provide: UserPotService, useValue: jasmine.createSpyObj('UserPotService', ['getUserPots']) }
+      ]
     })
     .compileComponents();
     

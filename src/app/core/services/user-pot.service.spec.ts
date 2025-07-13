@@ -38,7 +38,7 @@ describe('PotService', () => {
       expect(res.joinedAt).toBeInstanceOf(Date);
     });
 
-    const req = httpMock.expectOne('/api/pots/join');
+    const req = httpMock.expectOne('/api/user/join');
     expect(req.request.method).toBe('POST');
     req.flush(mockResponse);
   });
@@ -54,22 +54,22 @@ describe('PotService', () => {
       }
     });
 
-    const req = httpMock.expectOne('/api/pots/join');
+    const req = httpMock.expectOne('/api/user/join');
     req.flush('Error', { status: 400, statusText: 'Bad Request' });
   });
 
   it('should get user pots', () => {
     const userId = 'user1';
-    const mockResponse: UserPot[] = [
-      { userId, potId: 1 }
-    ];
+    const mockResponse = {
+      potList: ['0xabc', '0xdef']
+    };
 
     service.getUserPots(userId).subscribe(res => {
-      expect(res.potList.length).toBe(1);
-      expect(res.potList[0]).toBe(userId);
+      expect(res.potList.length).toBe(2);
+      expect(res.potList).toEqual(mockResponse.potList);
     });
 
-    const req = httpMock.expectOne(`/api/pots/user/${userId}`);
+    const req = httpMock.expectOne(`/api/user/list?walletAddress=${userId}`);
     expect(req.request.method).toBe('GET');
     req.flush(mockResponse);
   });

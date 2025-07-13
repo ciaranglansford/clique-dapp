@@ -1,4 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { PotService } from '@app/core/services/pot.service';
+import { of } from 'rxjs';
 
 import { CommunityPotsListComponent } from './community-pots-list.component';
 
@@ -8,7 +11,10 @@ describe('CommunityPotsListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CommunityPotsListComponent]
+      imports: [CommunityPotsListComponent, HttpClientTestingModule],
+      providers: [
+        { provide: PotService, useValue: { getAllPots: () => of({ potList: [] }) } }
+      ]
     })
     .compileComponents();
     

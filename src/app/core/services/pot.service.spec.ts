@@ -53,16 +53,16 @@ describe('PotService', () => {
 
 
   it('should get all pots', () => {
-    const mockResponse: GetPotListResponse[] = [
-      { potList:['0xabc', '0xvv'] }
-    ];
+    const mockResponse: GetPotListResponse = {
+      potList: ['0xabc', '0xvv']
+    };
 
     service.getAllPots().subscribe(res => {
       expect(res.potList.length).toBe(2);
-      expect(res.potList).toEqual(mockResponse[0].potList);
+      expect(res.potList).toEqual(mockResponse.potList);
     });
 
-    const req = httpMock.expectOne('/api/pots');
+    const req = httpMock.expectOne('/api/pots/all');
     expect(req.request.method).toBe('GET');
     req.flush(mockResponse);
   });

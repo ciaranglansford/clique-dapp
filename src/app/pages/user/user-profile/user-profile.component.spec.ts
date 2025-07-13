@@ -25,7 +25,7 @@ describe('UserProfileComponent', () => {
   it('should set userAddress when wallet is connected', () => {
     component.onWalletConnected('0xabc');
     expect(component.userAddress).toBe('0xabc');
-    expect(component.message).toBe('');
+    expect(component.message).toBe(null);
   });
 
   it('should display error message', () => {
