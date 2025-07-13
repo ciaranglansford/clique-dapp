@@ -3,17 +3,19 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { PotService } from '@app/core/services/pot.service';
 import { PotInfoResponse } from '@app/shared/models/pot.model';
+import { Observable, catchError, shareReplay, of } from 'rxjs';
+import { DetailedPotViewComponent } from '@app/shared/component/display/detailed-pot-view/detailed-pot-view.component';
 
 @Component({
   selector: 'app-pot-info',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, DetailedPotViewComponent],
   templateUrl: './pot-info.component.html',
   styleUrl: './pot-info.component.scss'
 })
 export class PotInfoComponent implements OnInit {
   contractAddress!: string;
-  potInfo: PotInfoResponse | null = null;
+  potInfo$!: Observable<PotInfoResponse | null>;
   isLoading = false;
   hasError = false;
 
@@ -34,16 +36,24 @@ export class PotInfoComponent implements OnInit {
   fetchPotInfo() {
     this.isLoading = true;
     this.hasError = false;
-    this.potService.getPotInfo(this.contractAddress).subscribe({
-      next: (res) => {
-        this.potInfo = res;
-        this.isLoading = false;
-      },
-      error: (err) => {
+    
+    this.potInfo$ = this.potService.getPotInfo(this.contractAddress).pipe(
+      catchError(err => {
         console.error('Failed to fetch pot info', err);
         this.hasError = true;
         this.isLoading = false;
+        return of(null);
+      }),
+      shareReplay(1) // Cache the result and prevent duplicate fetches
+    );
+    
+    this.potInfo$.subscribe({
+      next: () => {
+        this.isLoading = false;
       },
+      error: () => {
+        this.isLoading = false;
+      }
     });
   }
 }

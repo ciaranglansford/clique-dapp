@@ -14,11 +14,13 @@ export interface GetPotListResponse {
 
 // Add PotInfoResponse for detailed pot info
 export interface PotInfoResponse {
+  contractAddress: string;
   name: string;
   description: string;
   creator: string;
   balance: string;
   participants: string[];
   createdAt: number;
+  winner?: string; // Optional winner field
   // Add any additional fields as needed
 }

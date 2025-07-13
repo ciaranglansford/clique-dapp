@@ -1,13 +1,3 @@
 <div *ngIf="isLoading">Loading pot details...</div>
 <div *ngIf="hasError">Something went wrong loading the pot.</div>
-<ng-container *ngIf="potInfo && !isLoading && !hasError">
-  <h2>{{ potInfo.name }}</h2>
-  <p>{{ potInfo.description }}</p>
-  <p><strong>Creator:</strong> {{ potInfo.creator }}</p>
-  <p><strong>Balance:</strong> {{ potInfo.balance }}</p>
-  <p><strong>Participants:</strong></p>
-  <ul>
-    <li *ngFor="let participant of potInfo?.participants">{{ participant }}</li>
-  </ul>
-  <p><strong>Created:</strong> {{ potInfo.createdAt | date:'medium' }}</p>
-</ng-container>
+<detailed-pot-view *ngIf="potInfo$ | async as potInfo" [potInfo]="potInfo" />

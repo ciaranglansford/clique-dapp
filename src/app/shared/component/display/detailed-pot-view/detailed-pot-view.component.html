@@ -1,0 +1,40 @@
+<div class="detailed-pot-view">
+  <div class="pot-details">
+    <h2>Pot Details</h2>
+    
+    <div class="detail-row">
+      <span class="detail-label">Contract:</span>
+      <span class="detail-value">{{ potInfo.contractAddress }}</span>
+    </div>
+    
+    <div class="detail-row">
+      <span class="detail-label">Creator:</span>
+      <span class="detail-value">{{ potInfo.creator }}</span>
+    </div>
+    
+    <div class="detail-row">
+      <span class="detail-label">Balance:</span>
+      <span class="detail-value">{{ potInfo.balance }} ETH</span>
+    </div>
+    
+    <div class="detail-row">
+      <span class="detail-label">Created:</span>
+      <span class="detail-value">{{ potInfo.createdAt | date:'medium' }}</span>
+    </div>
+    
+    <div class="detail-row">
+      <span class="detail-label">Participants:</span>
+      <div class="participants-list">
+        <div *ngFor="let participant of potInfo.participants" class="participant-item">
+          {{ participant }}
+        </div>
+      </div>
+    </div>
+    
+    <div class="winner-section">
+      <span class="detail-label">Winner:</span>
+      <span *ngIf="potInfo.winner; else noWinner" class="detail-value">{{ potInfo.winner }}</span>
+      <ng-template #noWinner><span class="no-winner">Not yet selected</span></ng-template>
+    </div>
+  </div>
+</div> 

@@ -1,0 +1,70 @@
+// TODO: Improve the visual design of `detailed-pot-view`
+// - Apply Tailwind classes or Angular Material cards
+// - Add responsive layout and better visual hierarchy
+// - Consider status indicators (Active, Paid Out, etc.) if data supports it
+// - Add loading skeleton or spinner if needed
+
+.detailed-pot-view {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.pot-details {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 2rem;
+}
+
+.pot-details h2 {
+  color: var(--primary-dark);
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.detail-value {
+  color: var(--text-light);
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+.participants-list {
+  margin-top: 0.5rem;
+}
+
+.participant-item {
+  padding: 0.25rem 0;
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+.winner-section {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 2px solid var(--primary);
+}
+
+.no-winner {
+  font-style: italic;
+  color: var(--text-light);
+} 
