@@ -45,26 +45,36 @@ export class CreatePotBtnComponent {
   async createPot() {
     this.deployMessage = null;
     this.isDeploying = true;
+    console.log('🚀 Starting pot creation...');
 
     try {
+      console.log('📝 Parsing entry amount:', this.entryAmountEth);
       const entryAmount = ethers.parseEther(this.entryAmountEth);
+      console.log('📦 Deploying contract with entry amount:', entryAmount.toString());
+      
       const contractAddress = await this.web3.deployCliquePot(entryAmount);
+      console.log('✅ Contract deployed at:', contractAddress);
 
       const createPotRequest: CreatePotRequest = {
         contractAddress: contractAddress
       }
       
+      console.log('🌐 Sending request to backend:', createPotRequest);
       this.potService.createPot(createPotRequest).subscribe({
         next: (result: Pot) => {
+          console.log('✅ Backend response:', result);
           this.deployMessage = `✅ Pool created at ${result.contractAddress}`;
+          this.isDeploying = false;
         },
         error: (err) => {
+          console.error('❌ Backend error:', err);
           this.deployMessage = `❌ ${err.message || err}`;
+          this.isDeploying = false;
         }
       });
     } catch (err: any) {
+      console.error('❌ Smart contract error:', err);
       this.deployMessage = `❌ ${err.message || err}`;
-    } finally {
       this.isDeploying = false;
     }
   }

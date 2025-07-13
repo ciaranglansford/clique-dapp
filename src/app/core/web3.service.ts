@@ -10,8 +10,6 @@ export class Web3Service {
   private _isConnected = false;
   private _userAddress: string | null = null;
 
-  private contractCache = new Map<string, ethers.Contract>();
-
   get isConnected(): boolean {
     return this._isConnected;
   }
@@ -86,17 +84,12 @@ export class Web3Service {
   /**
    * Get a contract instance at a specific address (with caching)
    */
-  getContractAt(address: string): ethers.Contract {
-    if (!this.signer) {
+  getContractAt(contractAddress: string): ethers.Contract {
+    if (!this.signer && !this.provider) {
       throw new Error('Wallet not connected');
     }
 
-    if (!this.contractCache.has(address)) {
-      const instance = new ethers.Contract(address, CliquePotAbi.abi as ethers.InterfaceAbi, this.signer);
-      this.contractCache.set(address, instance);
-    }
-
-    return this.contractCache.get(address)!;
+    return new ethers.Contract(contractAddress, CliquePotAbi.abi as ethers.InterfaceAbi, this.signer);
   }
 
   /**
@@ -123,7 +116,7 @@ export class Web3Service {
    * Remove all `PayoutExecuted` listeners for a given contract
    */
   removePayoutListeners(contractAddress: string) {
-    const contract = this.contractCache.get(contractAddress);
+    const contract = new ethers.Contract(contractAddress, CliquePotAbi.abi as ethers.InterfaceAbi, this.signer);
     if (contract) {
       contract.removeAllListeners('PayoutExecuted');
     }

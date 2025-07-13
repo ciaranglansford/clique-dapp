@@ -46,31 +46,46 @@ export class JoinPotBtnComponent {
   async joinPot() {
     this.message = '';
     this.joining = true;
+    console.log('🚀 Starting pot join...');
+    console.log('📋 Contract address:', this.contractAddress);
+    console.log('👤 User address:', this.userAddress);
+    
     try {
+      console.log('🔗 Getting contract instance...');
       const contract = this.web3.getContractAt(this.contractAddress);
+      
+      console.log('💰 Getting entry amount...');
       const entryAmount = await contract['entryAmount']();
+      console.log('💵 Entry amount:', entryAmount.toString());
+      
+      console.log('📝 Sending join transaction...');
       const tx = await contract['joinPot']({ value: entryAmount });
+      console.log('⏳ Waiting for transaction confirmation...');
       await tx.wait();
+      console.log('✅ Transaction confirmed!');
 
       const joinRequest: JoinPotRequest = {
         contractAddress: this.contractAddress,
         walletAddress: this.userAddress!,
       };
       
+      console.log('🌐 Sending request to backend:', joinRequest);
       this.userPotService.joinPot(joinRequest).subscribe({
         next: (response) => {
+          console.log('✅ Backend response:', response);
           this.message = '✅ Joined the pot!';
-          console.log('Backend response:', response);
+          this.joining = false;
         },
         error: (error) => {
+          console.error('❌ Backend error:', error);
           this.message =
             '⚠️ Smart contract transaction successful, but backend update failed.';
-          console.error('Backend API error:', error);
+          this.joining = false;
         },
       });
     } catch (error: any) {
+      console.error('❌ Smart contract error:', error);
       this.message = `❌ ${error.reason || error.message}`;
-    } finally {
       this.joining = false;
     }
   }
