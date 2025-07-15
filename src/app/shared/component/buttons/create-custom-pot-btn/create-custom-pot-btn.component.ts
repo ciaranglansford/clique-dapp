@@ -35,6 +35,7 @@ export class CreateCustomPotBtnComponent {
         ...this.customPotData,
         contractAddress
       };
+      this.isDeploying = false;
       // this.potService.createCustomPot(backendPayload as any).subscribe({
       //   next: (result: CustomPotResponse) => {
       //     this.deployMessage = `Custom pot created at ${result.contractAddress}`;
