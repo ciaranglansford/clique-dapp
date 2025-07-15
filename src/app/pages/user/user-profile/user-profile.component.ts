@@ -2,16 +2,17 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Web3Service } from '@app/core/web3.service';
-import { WalletConnectComponent } from '@app/shared/component/wallet-connect/wallet-connect.component';
 import { JoinPotBtnComponent } from '@app/shared/component/buttons/join-pot-btn/join-pot-btn.component';
 import { PotPreviewComponent } from '@app/shared/component/display/pot-preview/pot-preview.component'
 import { UserPotService } from '@app/core/services/user-pot.service';
 import { CreatePotBtnComponent } from '@app/shared/component/buttons/create-pot-btn/create-pot-btn.component';
+import { Subscription } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-profile',
   standalone: true,
-  imports: [CommonModule, RouterModule, WalletConnectComponent, JoinPotBtnComponent, PotPreviewComponent, CreatePotBtnComponent],
+  imports: [CommonModule, RouterModule, JoinPotBtnComponent, PotPreviewComponent, CreatePotBtnComponent],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss'
 })
@@ -20,32 +21,37 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   userPotAddresses: string[] = [];
   isLoading: boolean = false;
   message: string | null = null;
+  private sub!: Subscription;
 
   constructor(
     private web3: Web3Service,
     private userPotService: UserPotService,
   ) {}
 
-  async ngOnInit(): Promise<void> {
-    try {
-      const existingAddress = await this.web3.checkExistingConnection();
-      if (existingAddress) {
-        this.onWalletConnected(existingAddress);
-      }
-    } catch (error: any) {
-      this.message = 'Error checking wallet connection: ' + error.message;
-    }
+  ngOnInit(): void {
+    let firstEmission = true;
+    this.sub = this.web3.userAddress$
+      .pipe(distinctUntilChanged())
+      .subscribe(address => {
+        this.userAddress = address || '';
+        if (this.userAddress) {
+          this.loadUserPots(this.userAddress);
+        } else if (!firstEmission) {
+          this.userPotAddresses = [];
+          this.message = null;
+        }
+        firstEmission = false;
+      });
+    // Removed checkExistingConnection call
   }
 
   ngOnDestroy(): void {
-   // this.web3.removePayoutListeners();
+    if (this.sub) this.sub.unsubscribe();
   }
 
-  onWalletConnected(address: string): void {
-    this.userAddress = address;
+  private loadUserPots(address: string): void {
     this.isLoading = true;
     this.message = null;
-
     this.userPotService.getUserPots(address).subscribe({
       next: (res) => {
         this.userPotAddresses = res.potList || [];

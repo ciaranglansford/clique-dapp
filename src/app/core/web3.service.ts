@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ethers, getAddress } from 'ethers';
 import CliquePotAbi from '../../assets/CliquePot.json'; // ABI JSON (includes .abi + .bytecode)
 import { deployContract } from './services/deploy-contract.util';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class Web3Service {
@@ -9,6 +10,12 @@ export class Web3Service {
   private signer!: ethers.Signer;
   private _isConnected = false;
   private _userAddress: string | null = null;
+
+  private userAddressSubject = new BehaviorSubject<string | null>(null);
+  public userAddress$: Observable<string | null> = this.userAddressSubject.asObservable();
+
+  private isConnectedSubject = new BehaviorSubject<boolean>(false);
+  public isConnected$: Observable<boolean> = this.isConnectedSubject.asObservable();
 
   get isConnected(): boolean {
     return this._isConnected;
@@ -31,6 +38,8 @@ export class Web3Service {
     this.signer = await this.provider.getSigner();
     this._userAddress = await this.signer.getAddress();
     this._isConnected = true;
+    this.userAddressSubject.next(this._userAddress);
+    this.isConnectedSubject.next(true);
 
     const network = await this.provider.getNetwork();
     if (network.chainId !== 31337n) {
@@ -55,10 +64,14 @@ export class Web3Service {
       this.signer = await this.provider.getSigner();
       this._userAddress = getAddress(accounts[0]);
       this._isConnected = true;
+      this.userAddressSubject.next(this._userAddress);
+      this.isConnectedSubject.next(true);
       return this._userAddress;
     } else {
       this._isConnected = false;
       this._userAddress = null;
+      this.userAddressSubject.next(null);
+      this.isConnectedSubject.next(false);
       return null;
     }
   }

@@ -3,44 +3,40 @@ import { Web3Service } from '@app/core/web3.service';
 import { UserPotService } from '@app/core/services/user-pot.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { WalletConnectComponent } from '@app/shared/component/wallet-connect/wallet-connect.component';
 import { JoinPotRequest } from '@app/shared/models/user-pot.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'join-pot-btn',
-  imports: [CommonModule, RouterModule, WalletConnectComponent],
+  imports: [CommonModule, RouterModule],
   standalone: true,
   templateUrl: './join-pot-btn.component.html',
   styleUrls: ['./join-pot-btn.component.scss'],
 })
 export class JoinPotBtnComponent {
-  @Input() userAddress: string | null = null;
   @Input() contractAddress = '';
+  userAddress: string | null = null;
   joining = false;
-  connecting = false;
   message = '';
+  private sub!: Subscription;
 
   constructor(
     private web3: Web3Service,
     private userPotService: UserPotService
   ) {}
 
-  async ngOnInit() {
-    if (!this.userAddress) {
-      await this.connectWallet();
-    }
+  ngOnInit() {
+    this.sub = this.web3.userAddress$.subscribe(address => {
+      this.userAddress = address;
+    });
+    // Optionally, check for existing connection on load
+    this.web3.checkExistingConnection().catch(error => {
+      this.message = 'Error checking wallet connection: ' + error.message;
+    });
   }
 
-  async connectWallet() {
-    this.connecting = true;
-    this.message = '';
-    try {
-      this.userAddress = await this.web3.connectWallet();
-    } catch (error: any) {
-      this.message = error.message || 'Failed to connect wallet.';
-    } finally {
-      this.connecting = false;
-    }
+  ngOnDestroy() {
+    if (this.sub) this.sub.unsubscribe();
   }
 
   async joinPot() {

@@ -25,7 +25,7 @@ describe('App Routes', () => {
 
   describe('Route Configuration', () => {
     it('should have correct number of routes', () => {
-      expect(routes.length).toBe(5); // 5 routes: '', 'admin', 'user', 'pots/:contractAddress', '**'
+      expect(routes.length).toBe(6); // 6 routes: '', 'admin', 'user', 'pots/create-custom', 'pots/:contractAddress', '**'
     });
 
     it('should have home route as default', () => {
@@ -102,7 +102,7 @@ describe('App Routes', () => {
 
   describe('Route Paths', () => {
     it('should have valid route paths', () => {
-      const validPaths = ['', 'admin', 'user', 'pots/:contractAddress', '**'];
+      const validPaths = ['', 'admin', 'user', 'pots/create-custom', 'pots/:contractAddress', '**'];
       
       routes.forEach(route => {
         expect(validPaths).toContain(route.path!);
@@ -172,7 +172,7 @@ describe('App Routes', () => {
     it('should have proper route structure for all routes', () => {
       routes.forEach(route => {
         if (route.path && route.path !== '**') {
-          expect(route.path!).toMatch(/^[a-zA-Z0-9\/:]*$/);
+          expect(route.path!).toMatch(/^[a-zA-Z0-9\/:-]*$/);
         }
       });
     });

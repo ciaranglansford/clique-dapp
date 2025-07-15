@@ -10,6 +10,5 @@ import { ViewPotButtonComponent } from '@app/shared/component/buttons/view-pot-b
   styleUrl: './pot-preview.component.scss'
 })
 export class PotPreviewComponent {
-  @Input() userAddress: string = '';
   @Input() contractAddress!: string;
 }

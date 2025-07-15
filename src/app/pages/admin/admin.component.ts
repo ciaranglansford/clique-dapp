@@ -2,11 +2,11 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Web3Service } from '@app/core/web3.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { WalletConnectComponent } from '@app/shared/component/wallet-connect/wallet-connect.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-admin',
-  imports: [CommonModule, RouterModule, WalletConnectComponent],
+  imports: [CommonModule, RouterModule],
   standalone: true,
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss']
@@ -16,28 +16,22 @@ export class AdminComponent implements OnInit, OnDestroy {
   message = '';
   processing = false;
   payoutInfo: { round: bigint, winner: string, amount: string } | null = null;
+  private sub!: Subscription;
 
   constructor(private web3: Web3Service) {}
 
-  async ngOnInit() {
-    try {
-      const address = await this.web3.checkExistingConnection();
-      if (address) this.userAddress = address;
-      // this.web3.listenToPayoutExecuted((data) => {
-      //   this.payoutInfo = data;
-      // });
-    } catch (error: any) {
+  ngOnInit() {
+    this.sub = this.web3.userAddress$.subscribe(address => {
+      this.userAddress = address || '';
+    });
+    // Optionally, check for existing connection on load
+    this.web3.checkExistingConnection().catch(error => {
       this.message = error.message;
-    }
+    });
   }
 
   ngOnDestroy() {
-    //this.web3.removePayoutListeners();
-  }
-
-  onWalletConnected(address: string) {
-    this.userAddress = address;
-    this.message = '';
+    if (this.sub) this.sub.unsubscribe();
   }
 
   async triggerPayout() {

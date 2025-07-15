@@ -5,6 +5,7 @@ import { CreatePotRequest, Pot } from '@app/shared/models/pot.model';
 import { Web3Service } from '@app/core/web3.service';
 import { PotService } from '@app/core/services/pot.service';
 import { ethers } from 'ethers';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'create-pot-btn',
@@ -14,32 +15,27 @@ import { ethers } from 'ethers';
   styleUrls: ['./create-pot-btn.component.scss']
 })
 export class CreatePotBtnComponent {
-  @Input() userAddress: string | null = null;
+  userAddress: string | null = null;
   isDeploying = false;
   deployMessage: string | null = null;
   entryAmountEth = '';
-  connecting = false;
   message = '';
+  private sub!: Subscription;
 
   constructor(private web3: Web3Service, private potService: PotService) {}
 
-  async ngOnInit() {
-    if (!this.userAddress) {
-      await this.connectWallet();
-    }
+  ngOnInit() {
+    this.sub = this.web3.userAddress$.subscribe(address => {
+      this.userAddress = address;
+    });
+    // Optionally, check for existing connection on load
+    this.web3.checkExistingConnection().catch(error => {
+      this.message = 'Error checking wallet connection: ' + error.message;
+    });
   }
 
-  async connectWallet() {
-    this.connecting = true;
-    this.message = '';
-    try {
-      this.userAddress = await this.web3.connectWallet();
-      this.message = 'Wallet connected!';
-    } catch (error: any) {
-      this.message = error.message || 'Failed to connect wallet.';
-    } finally {
-      this.connecting = false;
-    }
+  ngOnDestroy() {
+    if (this.sub) this.sub.unsubscribe();
   }
 
   async createPot() {
