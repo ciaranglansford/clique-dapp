@@ -10,10 +10,6 @@
     {{ loading ? 'Connecting...' : 'Connect Wallet' }}
   </button>
 
-  <p *ngIf="userAddress" class="wallet-address">
-    {{ userAddress }}
-  </p>
-
   <p *ngIf="error" class="error-text" aria-live="polite">
     {{ error }}
   </p>

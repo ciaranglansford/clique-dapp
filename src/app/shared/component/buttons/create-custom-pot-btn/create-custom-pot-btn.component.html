@@ -1,0 +1,4 @@
+<button type="button" [disabled]="disabled || isDeploying" (click)="createCustomPot()" class="create-custom-btn">
+  {{ isDeploying ? 'Creating...' : 'Create Custom Pot' }}
+</button>
+<div *ngIf="deployMessage" class="deploy-message">{{ deployMessage }}</div> 

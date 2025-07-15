@@ -5,7 +5,6 @@ export interface CreatePotRequest {
 export interface Pot {
   id: number;
   contractAddress: string;
-  // Extend with any backend-returned fields
 }
 
 export interface GetPotListResponse {
@@ -22,5 +21,20 @@ export interface PotInfoResponse {
   participants: string[];
   createdAt: number;
   winner?: string; // Optional winner field
-  // Add any additional fields as needed
+}
+
+// Custom Pot Creation
+export interface CustomPotRequest {
+  entryAmount: number;
+  currencyType: string;
+  maxPlayers: number;
+}
+
+export interface CustomPotResponse {
+  id: string;
+  contractAddress: string;
+  entryAmount: number;
+  currencyType: string;
+  maxPlayers: number;
+  createdAt: string;
 }

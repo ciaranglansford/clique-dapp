@@ -1,0 +1,63 @@
+.custom-pot-container {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem 1.5rem;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.custom-pot-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+input, select {
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  font-size: 1rem;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px var(--primary-light);
+}
+
+.feedback-message {
+  margin-top: 1.2rem;
+  padding: 1rem;
+  border-radius: 6px;
+  background-color: #f8fafc;
+  border-left: 4px solid var(--primary);
+  color: var(--text);
+  font-size: 1.05rem;
+  text-align: center;
+}
+
+.created-pot-info {
+  margin-top: 2rem;
+  padding: 1.2rem;
+  background: #e0f7e9;
+  border: 1px solid #b5e5c7;
+  border-radius: 8px;
+  color: #155724;
+  box-shadow: 0 2px 8px #22c55e22;
+}
+
+.created-pot-info pre {
+  background: #fff;
+  padding: 0.7rem;
+  border-radius: 6px;
+  font-size: 0.98rem;
+  color: #222;
+  overflow-x: auto;
+} 

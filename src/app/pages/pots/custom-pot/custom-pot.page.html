@@ -1,0 +1,29 @@
+<div class="custom-pot-container">
+  <h2>Create a Custom Pot</h2>
+  <form [formGroup]="customPotForm" class="custom-pot-form">
+    <div class="form-group">
+      <label for="entryAmount">Entry Amount</label>
+      <input id="entryAmount" formControlName="entryAmount" type="number" min="0.0001" step="any" required />
+    </div>
+    <div class="form-group">
+      <label for="currencyType">Currency</label>
+      <select id="currencyType" formControlName="currencyType">
+        <option *ngFor="let option of currencyOptions" [value]="option.value">{{ option.label }}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="maxPlayers">Max Players</label>
+      <input id="maxPlayers" formControlName="maxPlayers" type="number" min="2" required />
+    </div>
+    <!-- Button component will be placed here -->
+    <create-custom-pot-btn 
+      [customPotData]="formValue" 
+      [disabled]="customPotForm.invalid"
+      (create)="onCreateCustomPot($event)"></create-custom-pot-btn>
+  </form>
+  <div *ngIf="message" class="feedback-message">{{ message }}</div>
+  <div *ngIf="createdPot" class="created-pot-info">
+    <h3>Custom Pot Created</h3>
+    <pre>{{ createdPot | json }}</pre>
+  </div>
+</div> 

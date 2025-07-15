@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
-import { CreatePotRequest, Pot, GetPotListResponse } from '@app/shared/models/pot.model';
+import { CreatePotRequest, Pot, GetPotListResponse, CustomPotRequest, CustomPotResponse } from '@app/shared/models/pot.model';
 import { PotInfoResponse } from '@app/shared/models/pot.model';
 
 @Injectable({
@@ -27,6 +27,12 @@ export class PotService {
   /** Get info for a specific pot */
   getPotInfo(contractAddress: string): Observable<PotInfoResponse> {
     return this.http.get<PotInfoResponse>(`${this.baseUrl}/info/${contractAddress}`)
+      .pipe(catchError(this.handleError));
+  }
+
+  /** Create a custom pot */
+  createCustomPot(payload: CustomPotRequest): Observable<CustomPotResponse> {
+    return this.http.post<CustomPotResponse>(`${this.baseUrl}/createCustom`, payload)
       .pipe(catchError(this.handleError));
   }
 

@@ -66,7 +66,7 @@ export class Web3Service {
   /**
    * Deploy a new instance of the CliquePot contract
    */
-  async deployCliquePot(entryAmount: bigint): Promise<string> {
+  async deployCliquePot(entryAmount: bigint, maxParticipants: number): Promise<string> {
     if (!this.signer) {
       throw new Error('Wallet not connected');
     }
@@ -78,7 +78,7 @@ export class Web3Service {
       throw new Error('CliquePot bytecode not found in ABI JSON');
     }
 
-    return await deployContract(this.signer, abi, bytecode, entryAmount);
+    return await deployContract(this.signer, abi, bytecode, entryAmount, maxParticipants);
   }
 
   /**

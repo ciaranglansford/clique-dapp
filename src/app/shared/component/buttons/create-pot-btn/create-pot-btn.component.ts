@@ -49,8 +49,9 @@ export class CreatePotBtnComponent {
 
     try {
       const entryAmount = ethers.parseEther(this.entryAmountEth);
+      const maxParticipants = 10;
       
-      const contractAddress = await this.web3.deployCliquePot(entryAmount);
+      const contractAddress = await this.web3.deployCliquePot(entryAmount, maxParticipants);
 
       const createPotRequest: CreatePotRequest = {
         contractAddress: contractAddress
