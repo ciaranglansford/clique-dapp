@@ -1,8 +1,8 @@
 <div *ngIf="!isLoading && hasPots(); else noPots">
   <div class="pots-grid">
     <pot-preview
-      *ngFor="let contractAddress of potContractAddresses"
-      [contractAddress]="contractAddress"
+      *ngFor="let pot of potList"
+      [pot]="pot"
     ></pot-preview>
   </div>
 </div>

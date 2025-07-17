@@ -5,7 +5,7 @@ import { CreatePotRequest, Pot } from '@app/shared/models/pot.model';
 import { Web3Service } from '@app/core/web3.service';
 import { PotService } from '@app/core/services/pot.service';
 import { ethers } from 'ethers';
-import { Subscription } from 'rxjs';
+import { max, Subscription } from 'rxjs';
 
 @Component({
   selector: 'create-pot-btn',
@@ -45,12 +45,15 @@ export class CreatePotBtnComponent {
 
     try {
       const entryAmount = ethers.parseEther(this.entryAmountEth);
-      const maxParticipants = 10;
+      const maxPlayers = 10;
       
-      const contractAddress = await this.web3.deployCliquePot(entryAmount, maxParticipants);
+      const contractAddress = await this.web3.deployCliquePot(entryAmount, maxPlayers);
 
       const createPotRequest: CreatePotRequest = {
-        contractAddress: contractAddress
+        contractAddress: contractAddress,
+        currencyType: 'ETH',
+        entryAmount: entryAmount,
+        maxPlayers: maxPlayers
       }
       
       console.log('🌐 Sending request to backend:', createPotRequest);

@@ -1,0 +1,4 @@
+<button type="button" [disabled]="disabled || isDeploying" (click)="createCommunityPot()" class="create-community-btn">
+  {{ isDeploying ? 'Creating...' : 'Create Community Pot' }}
+</button>
+<div *ngIf="deployMessage" class="deploy-message">{{ deployMessage }}</div> 

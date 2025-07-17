@@ -9,10 +9,10 @@
   </div>
   
   <div *ngIf="!isLoading && hasUserPots(); else noPots">
-    <pot-preview
+    <joined-pot-preview
       *ngFor="let contractAddress of userPotAddresses"
       [contractAddress]="contractAddress"
-    ></pot-preview>
+    ></joined-pot-preview>
   </div>
 
   <!-- Fallback Message -->

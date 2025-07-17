@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PotService } from '@app/core/services/pot.service';
-import { CustomPotRequest, CustomPotResponse } from '@app/shared/models/pot.model';
+import { CreatePotRequest, CreatePotResponse } from '@app/shared/models/pot.model';
 import { CreateCustomPotBtnComponent } from '@app/shared/component/buttons/create-custom-pot-btn/create-custom-pot-btn.component';
 
 @Component({
@@ -19,7 +19,7 @@ export class CustomPotPageComponent {
     // Future: Add more currencies here
   ];
   message: string | null = null;
-  createdPot: CustomPotResponse | null = null;
+  createdPot: CreatePotResponse | null = null;
 
   constructor(private fb: FormBuilder, private potService: PotService) {
     this.customPotForm = this.fb.group({
@@ -33,7 +33,7 @@ export class CustomPotPageComponent {
     return this.customPotForm.value;
   }
 
-  onCreateCustomPot(data: CustomPotRequest) {
+  onCreateCustomPot(data: CreatePotRequest) {
     this.message = null;
     this.createdPot = null;
     this.potService.createCustomPot(data).subscribe({

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PotService } from '@app/core/services/pot.service';
 import { PotPreviewComponent } from '@app/shared/component/display/pot-preview/pot-preview.component';
+import { Pot } from '@app/shared/models/pot.model';
 
 @Component({
   selector: 'community-pots-list',
@@ -12,7 +13,7 @@ import { PotPreviewComponent } from '@app/shared/component/display/pot-preview/p
 })
 export class CommunityPotsListComponent implements OnInit {
   isLoading = true;
-  potContractAddresses: string[] = [];
+  potList: Pot[] = [];
 
   constructor(private potService: PotService) {}
 
@@ -20,17 +21,17 @@ export class CommunityPotsListComponent implements OnInit {
     this.isLoading = true;
     this.potService.getAllPots().subscribe({
       next: (response) => {
-        this.potContractAddresses = response.potList || [];
+        this.potList = response.potList || [];
         this.isLoading = false;
       },
       error: () => {
-        this.potContractAddresses = [];
+        this.potList = [];
         this.isLoading = false;
       }
     });
   }
 
   hasPots(): boolean {
-    return this.potContractAddresses.length > 0;
+    return this.potList.length > 0;
   }
 }

@@ -6,13 +6,13 @@ import { PotService } from '@app/core/services/pot.service';
 import { ethers } from 'ethers';
 
 @Component({
-  selector: 'create-custom-pot-btn',
+  selector: 'create-comunity-pot-btn',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './create-custom-pot-btn.component.html',
-  styleUrls: ['./create-custom-pot-btn.component.scss']
+  templateUrl: './create-community-pot-btn.component.html',
+  styleUrls: ['./create-community-pot-btn.component.scss']
 })
-export class CreateCustomPotBtnComponent {
+export class CreateCommunityPotBtnComponent {
   @Input() customPotData!: CreatePotRequest;
   @Input() disabled = false;
   @Output() create = new EventEmitter<CreatePotResponse>();

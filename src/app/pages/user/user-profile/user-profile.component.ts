@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Web3Service } from '@app/core/web3.service';
 import { JoinPotBtnComponent } from '@app/shared/component/buttons/join-pot-btn/join-pot-btn.component';
-import { PotPreviewComponent } from '@app/shared/component/display/pot-preview/pot-preview.component'
+import { JoinedPotPreviewComponent } from '@app/shared/component/display/joined-pot-preview/joined-pot-preview.component';
 import { UserPotService } from '@app/core/services/user-pot.service';
 import { CreatePotBtnComponent } from '@app/shared/component/buttons/create-pot-btn/create-pot-btn.component';
 import { Subscription } from 'rxjs';
@@ -12,7 +12,7 @@ import { distinctUntilChanged } from 'rxjs/operators';
 @Component({
   selector: 'app-user-profile',
   standalone: true,
-  imports: [CommonModule, RouterModule, JoinPotBtnComponent, PotPreviewComponent, CreatePotBtnComponent],
+  imports: [CommonModule, RouterModule, JoinPotBtnComponent, JoinedPotPreviewComponent, CreatePotBtnComponent],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss'
 })

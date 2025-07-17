@@ -1,4 +1,5 @@
 <div class="pot-preview-card">
-    <join-pot-btn [contractAddress]="contractAddress"></join-pot-btn>
-    <view-pot-button [contractAddress]="contractAddress"></view-pot-button>
+    {{ pot.contractAddress }}
+    <join-pot-btn [contractAddress]="pot.contractAddress"></join-pot-btn>
+    <view-pot-button [contractAddress]="pot.contractAddress"></view-pot-button>
 </div>

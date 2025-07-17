@@ -1,14 +1,30 @@
 export interface CreatePotRequest {
   contractAddress: string;
+  entryAmount: bigint;
+  currencyType: string;
+  maxPlayers: number;
+}
+
+export interface CreatePotResponse {
+  id: string;
+  contractAddress: string;
+  entryAmount: bigint;
+  currencyType: string;
+  maxPlayers: number;
+  createdAt: string;
 }
 
 export interface Pot {
-  id: number;
+  id: string;
   contractAddress: string;
+  entryAmount: bigint;
+  currencyType: string;
+  maxPlayers: number;
+  createdAt: Date;
 }
 
 export interface GetPotListResponse {
-  potList: string[];
+  potList: Pot[];
 }
 
 // Add PotInfoResponse for detailed pot info
@@ -23,18 +39,3 @@ export interface PotInfoResponse {
   winner?: string; // Optional winner field
 }
 
-// Custom Pot Creation
-export interface CustomPotRequest {
-  entryAmount: number;
-  currencyType: string;
-  maxPlayers: number;
-}
-
-export interface CustomPotResponse {
-  id: string;
-  contractAddress: string;
-  entryAmount: number;
-  currencyType: string;
-  maxPlayers: number;
-  createdAt: string;
-}
