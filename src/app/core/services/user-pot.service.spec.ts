@@ -65,8 +65,8 @@ describe('PotService', () => {
     };
 
     service.getUserPots(userId).subscribe(res => {
-      expect(res.potList.length).toBe(2);
-      expect(res.potList).toEqual(mockResponse.potList);
+      expect(res.contractAddresses.length).toBe(2);
+      expect(res.contractAddresses).toEqual(mockResponse.potList);
     });
 
     const req = httpMock.expectOne(`/api/user/list?walletAddress=${userId}`);

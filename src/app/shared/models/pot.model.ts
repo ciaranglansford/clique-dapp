@@ -1,6 +1,6 @@
 export interface CreatePotRequest {
   contractAddress: string;
-  entryAmount: bigint;
+  entryAmount: number;
   currencyType: string;
   maxPlayers: number;
 }
@@ -8,7 +8,7 @@ export interface CreatePotRequest {
 export interface CreatePotResponse {
   id: string;
   contractAddress: string;
-  entryAmount: bigint;
+  entryAmount: number;
   currencyType: string;
   maxPlayers: number;
   createdAt: string;
@@ -17,7 +17,7 @@ export interface CreatePotResponse {
 export interface Pot {
   id: string;
   contractAddress: string;
-  entryAmount: bigint;
+  entryAmount: number;
   currencyType: string;
   maxPlayers: number;
   createdAt: Date;

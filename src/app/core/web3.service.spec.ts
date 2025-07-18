@@ -58,7 +58,7 @@ describe('Web3Service', () => {
   describe('deployCliquePot', () => {
     it('should throw error if wallet not connected', async () => {
       try {
-        await service.deployCliquePot(BigInt('100000000000000000'), 10);
+        await service.deployCliquePot(100000000000000000, 10);
         fail('Should have thrown an error');
       } catch (error: any) {
         expect(error.message).toContain('Wallet not connected');

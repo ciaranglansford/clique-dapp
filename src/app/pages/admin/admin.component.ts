@@ -15,7 +15,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   userAddress: string = '';
   message = '';
   processing = false;
-  payoutInfo: { round: bigint, winner: string, amount: string } | null = null;
+  payoutInfo: { round: number, winner: string, amount: string } | null = null;
   private sub!: Subscription;
 
   constructor(private web3: Web3Service) {}

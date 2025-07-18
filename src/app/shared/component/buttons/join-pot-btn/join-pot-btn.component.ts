@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { JoinPotRequest } from '@app/shared/models/user-pot.model';
 import { Subscription } from 'rxjs';
+import { Pot } from '@app/shared/models/pot.model'
 
 @Component({
   selector: 'join-pot-btn',
@@ -14,7 +15,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./join-pot-btn.component.scss'],
 })
 export class JoinPotBtnComponent {
-  @Input() contractAddress = '';
+  @Input() pot!: Pot;
   userAddress: string | null = null;
   joining = false;
   message = '';
@@ -44,7 +45,7 @@ export class JoinPotBtnComponent {
     this.joining = true;
    
     try {
-      const contract = this.web3.getContractAt(this.contractAddress);
+      const contract = this.web3.getContractAt(this.pot.contractAddress);
       
       const entryAmount = await contract['entryAmount']();
       
@@ -52,7 +53,7 @@ export class JoinPotBtnComponent {
       await tx.wait();
 
       const joinRequest: JoinPotRequest = {
-        contractAddress: this.contractAddress,
+        contractAddress: this.pot.contractAddress,
         walletAddress: this.userAddress!,
       };
       

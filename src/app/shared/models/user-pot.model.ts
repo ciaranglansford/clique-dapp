@@ -24,5 +24,5 @@ export interface GetUserPotRequest{
 }
 
 export interface PotContractList{
-  potList: string[];
+  contractAddresses: string[];
 }

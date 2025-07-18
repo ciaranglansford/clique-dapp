@@ -54,7 +54,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.message = null;
     this.userPotService.getUserPots(address).subscribe({
       next: (res) => {
-        this.userPotAddresses = res.potList || [];
+        this.userPotAddresses = res.contractAddresses || [];
         if (this.userPotAddresses.length === 0) {
           this.message = 'You haven’t joined any pots yet.';
         }

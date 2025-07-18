@@ -26,7 +26,7 @@ export class CreateCommunityPotBtnComponent {
     this.deployMessage = null;
     this.isDeploying = true;
     try {
-      const entryAmount = ethers.parseEther(this.customPotData.entryAmount.toString());
+      const entryAmount = this.customPotData.entryAmount;
       const maxPlayers = this.customPotData.maxPlayers;
       // Deploy contract
       const contractAddress = await this.web3.deployCliquePot(entryAmount, maxPlayers);

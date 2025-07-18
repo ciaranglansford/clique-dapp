@@ -15,10 +15,10 @@ import { max, Subscription } from 'rxjs';
   styleUrls: ['./create-pot-btn.component.scss']
 })
 export class CreatePotBtnComponent {
+  @Input() entryAmountEth!: number;
   userAddress: string | null = null;
   isDeploying = false;
   deployMessage: string | null = null;
-  entryAmountEth = '';
   message = '';
   private sub!: Subscription;
 
@@ -44,15 +44,14 @@ export class CreatePotBtnComponent {
     console.log('🚀 Starting pot creation...');
 
     try {
-      const entryAmount = ethers.parseEther(this.entryAmountEth);
       const maxPlayers = 10;
       
-      const contractAddress = await this.web3.deployCliquePot(entryAmount, maxPlayers);
+      const contractAddress = await this.web3.deployCliquePot(this.entryAmountEth, maxPlayers);
 
       const createPotRequest: CreatePotRequest = {
         contractAddress: contractAddress,
         currencyType: 'ETH',
-        entryAmount: entryAmount,
+        entryAmount: this.entryAmountEth,
         maxPlayers: maxPlayers
       }
       
