@@ -1,3 +1,17 @@
+<!-- <detailed-pot-view *ngIf="potInfo$ | async as potInfo" [potInfo]="potInfo" /> -->
 <div *ngIf="isLoading">Loading pot details...</div>
 <div *ngIf="hasError">Something went wrong loading the pot.</div>
-<detailed-pot-view *ngIf="potInfo$ | async as potInfo" [potInfo]="potInfo" />
+
+<ng-container *ngIf="potEntries$ | async as entries">
+  <div *ngIf="entries.length > 0; else noEntries">
+    <div *ngFor="let entry of entries">
+      <strong>User:</strong> {{ entry.walletAddress }}<br />
+      <strong>Pot Address:</strong> {{ entry.contractAddress }}
+      <hr />
+    </div>
+  </div>
+
+  <ng-template #noEntries>
+    <p>No entries found for this pot.</p>
+  </ng-template>
+</ng-container>

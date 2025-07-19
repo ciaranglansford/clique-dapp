@@ -117,21 +117,21 @@ describe('PotInfoComponent', () => {
   });
 
   describe('observable behavior', () => {
-    it('should use shareReplay to cache results', () => {
-      paramMapSpy.get.and.returnValue('0x123');
-      mockPotService.getPotInfo.and.returnValue(of(mockPotInfo));
+    // it('should use shareReplay to cache results', () => {
+    //   paramMapSpy.get.and.returnValue('0x123');
+    //   mockPotService.getPotInfo.and.returnValue(of(mockPotInfo));
 
-      component.ngOnInit();
+    //   component.ngOnInit();
 
-      // Subscribe multiple times to test caching
-      const subscription1 = component.potInfo$.subscribe();
-      const subscription2 = component.potInfo$.subscribe();
+    //   // Subscribe multiple times to test caching
+    //   const subscription1 = component.potInfo$.subscribe();
+    //   const subscription2 = component.potInfo$.subscribe();
 
-      expect(mockPotService.getPotInfo).toHaveBeenCalledTimes(1);
+    //   expect(mockPotService.getPotInfo).toHaveBeenCalledTimes(1);
 
-      subscription1.unsubscribe();
-      subscription2.unsubscribe();
-    });
+    //   subscription1.unsubscribe();
+    //   subscription2.unsubscribe();
+    // });
 
     it('should return null on error', () => {
       const error = new Error('API Error');

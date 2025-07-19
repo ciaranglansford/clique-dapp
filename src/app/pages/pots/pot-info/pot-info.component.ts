@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { PotService } from '@app/core/services/pot.service';
-import { PotInfoResponse } from '@app/shared/models/pot.model';
-import { Observable, catchError, shareReplay, of } from 'rxjs';
+import { PotEntryService } from '@app/core/services/pot-entry.service';
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { DetailedPotViewComponent } from '@app/shared/component/display/detailed-pot-view/detailed-pot-view.component';
+import { PotEntry } from '@app/shared/models/pot-entry.model';
 
 @Component({
   selector: 'app-pot-info',
@@ -15,13 +16,14 @@ import { DetailedPotViewComponent } from '@app/shared/component/display/detailed
 })
 export class PotInfoComponent implements OnInit {
   contractAddress!: string;
-  potInfo$!: Observable<PotInfoResponse | null>;
+  potEntries$!: Observable<PotEntry[]>;
+
   isLoading = false;
   hasError = false;
 
   constructor(
     private route: ActivatedRoute,
-    private potService: PotService
+    private potEntryService: PotEntryService
   ) {}
 
   ngOnInit() {
@@ -30,29 +32,30 @@ export class PotInfoComponent implements OnInit {
       this.hasError = true;
       return;
     }
-    this.fetchPotInfo();
+    this.fetchPotEntries();
   }
 
-  fetchPotInfo() {
+  fetchPotEntries() {
     this.isLoading = true;
     this.hasError = false;
-    
-    this.potInfo$ = this.potService.getPotInfo(this.contractAddress).pipe(
+
+    this.potEntries$ = this.potEntryService.getUsersByContract(this.contractAddress).pipe(
       catchError(err => {
-        console.error('Failed to fetch pot info', err);
+        console.error('Failed to fetch pot entries', err);
         this.hasError = true;
         this.isLoading = false;
-        return of(null);
-      }),
-      shareReplay(1) // Cache the result and prevent duplicate fetches
+        return of([]); // Return an empty array to avoid breaking *ngFor
+      })
     );
-    
-    this.potInfo$.subscribe({
+
+    // Only used to manage loading state; async pipe handles data in template
+    this.potEntries$.subscribe({
       next: () => {
         this.isLoading = false;
       },
       error: () => {
         this.isLoading = false;
+        this.hasError = true;
       }
     });
   }
